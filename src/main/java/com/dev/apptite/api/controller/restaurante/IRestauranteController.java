@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ import static org.springframework.http.HttpStatus.*;
 @Validated
 public interface IRestauranteController {
 
-        @Operation(
+    @Operation(
             summary = "Criar Restaurante",
             description = "Endpoint responsável por criar um novo restaurante",
             responses = {
@@ -43,7 +44,7 @@ public interface IRestauranteController {
             })
     @PostMapping
     @ResponseStatus(CREATED)
-    RestauranteResponse create(@Valid @RequestBody RestauranteRequest restauranteRequest);
+    ResponseEntity<RestauranteResponse> create(@Valid @RequestBody RestauranteRequest restauranteRequest);
 
     @Operation(
             summary = "Buscar Restaurante",

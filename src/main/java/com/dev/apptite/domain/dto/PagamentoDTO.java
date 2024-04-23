@@ -6,8 +6,8 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
-public class RestauranteDTO {
-    Long idRestaurante;
-    String nome;
-    String endereco;
+public class PagamentoDTO {
+    Long idPagamento;
+    Double valorTotalPedido;
+    String metodoPagamento;
 }

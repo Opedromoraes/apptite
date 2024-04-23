@@ -6,8 +6,9 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
-public class RestauranteDTO {
-    Long idRestaurante;
-    String nome;
-    String endereco;
+public class VariacaoItemDTO {
+    Long idVariacao;
+    String tipo;
+    Double custoAdicional;
+
 }
