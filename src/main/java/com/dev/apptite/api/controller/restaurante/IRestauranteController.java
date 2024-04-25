@@ -1,6 +1,7 @@
 package com.dev.apptite.api.controller.restaurante;
 
 import com.dev.apptite.api.controller.restaurante.request.RestauranteRequest;
+import com.dev.apptite.api.controller.restaurante.request.RestauranteUpdateRequest;
 import com.dev.apptite.api.controller.restaurante.response.RestauranteResponse;
 import com.dev.apptite.domain.exceptions.ErroDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,9 +10,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -65,90 +69,54 @@ public interface IRestauranteController {
             })
     @GetMapping
     @ResponseStatus(OK)
-    RestauranteResponse findAll();
+    ResponseEntity<List<RestauranteResponse>> findAll();
+
+
+
+    @Operation(
+            summary = "Atualizar Restaurante",
+            description = "Endpoint responsável por atualizar um restaurante",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Restaurante atualizado com sucesso.",
+                            content = @Content(schema = @Schema(implementation = RestauranteResponse.class))),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Restaurante não encontrado.",
+                            content = @Content(schema = @Schema(implementation = ErroDTO.class))),
+                    @ApiResponse(
+                            responseCode = "422",
+                            description = "Requisição possui pelo menos um valor faltante ou inválido.",
+                            content = @Content(schema = @Schema(implementation = ErroDTO.class))),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Ocorreu um erro inesperado.",
+                            content = @Content(schema = @Schema(implementation = ErroDTO.class)))
+            })
+    @PutMapping
+    @ResponseStatus(OK)
+    ResponseEntity<RestauranteResponse> update(@Valid @RequestBody RestauranteUpdateRequest request, @RequestParam Long id);
 
 //    @Operation(
-//            summary = "Criar Cliente",
-//            description = "Endpoint responsável por criar um novo cliente",
-//            responses = {
-//                    @ApiResponse(
-//                            responseCode = "201",
-//                            description = "Cliente criado com sucesso.",
-//                            content = @Content(schema = @Schema(implementation = ClienteResponse.class))),
-//                    @ApiResponse(
-//                            responseCode = "422",
-//                            description = "Requisição possui pelo menos um valor faltante ou inválido.",
-//                            content = @Content(schema = @Schema(implementation = ErrorObject.class))),
-//                    @ApiResponse(
-//                            responseCode = "500",
-//                            description = "Ocorreu um erro inesperado.",
-//                            content = @Content(schema = @Schema(implementation = ErrorObject.class)))
-//            })
-//    @PostMapping
-//    @ResponseStatus(CREATED)
-//    ClienteResponse create(@Valid @RequestBody ClienteRequest clienteRequest);
-//    @Operation(
-//            summary = "Buscar Cliente",
-//            description = "Endpoint responsável por buscar um cliente",
-//            responses = {
-//                    @ApiResponse(
-//                            responseCode = "200",
-//                            description = "Cliente encontrado com sucesso.",
-//                            content = @Content(schema = @Schema(implementation = ClienteResponse.class))),
-//                    @ApiResponse(
-//                            responseCode = "404",
-//                            description = "Cliente não encontrado.",
-//                            content = @Content(schema = @Schema(implementation = ErrorObject.class))),
-//                    @ApiResponse(
-//                            responseCode = "500",
-//                            description = "Ocorreu um erro inesperado.",
-//                            content = @Content(schema = @Schema(implementation = ErrorObject.class)))
-//            })
-//    @GetMapping
-//    @ResponseStatus(OK)
-//    ClienteResponse findAll();
-//    @Operation(
-//            summary = "Atualizar Cliente",
-//            description = "Endpoint responsável por atualizar um cliente",
-//            responses = {
-//                    @ApiResponse(
-//                            responseCode = "200",
-//                            description = "Cliente atualizado com sucesso.",
-//                            content = @Content(schema = @Schema(implementation = ClienteResponse.class))),
-//                    @ApiResponse(
-//                            responseCode = "404",
-//                            description = "Cliente não encontrado.",
-//                            content = @Content(schema = @Schema(implementation = ErrorObject.class))),
-//                    @ApiResponse(
-//                            responseCode = "422",
-//                            description = "Requisição possui pelo menos um valor faltante ou inválido.",
-//                            content = @Content(schema = @Schema(implementation = ErrorObject.class))),
-//                    @ApiResponse(
-//                            responseCode = "500",
-//                            description = "Ocorreu um erro inesperado.",
-//                            content = @Content(schema = @Schema(implementation = ErrorObject.class)))
-//            })
-//    @PutMapping(value = "/{id}")
-//    @ResponseStatus(OK)
-//    ClienteRequest update(@Valid @RequestBody ClienteRequest clienteRequest,@PathVariable Long id);
-//    @Operation(
-//            summary = "Deletar Cliente",
+//            summary = "Deletar Restaurante",
 //            description = "Endpoint responsável por deletar um cliente",
 //            responses = {
 //                    @ApiResponse(
 //                            responseCode = "204",
-//                            description = "Cliente deletado com sucesso."
+//                            description = "Restaurante deletado com sucesso."
 //                    ),
 //                    @ApiResponse(
 //                            responseCode = "404",
-//                            description = "Cliente não encontrado.",
-//                            content = @Content(schema = @Schema(implementation = ErrorObject.class))),
+//                            description = "Restaurante não encontrado.",
+//                            content = @Content(schema = @Schema(implementation = ErroDTO.class))),
 //                    @ApiResponse(
 //                            responseCode = "500",
 //                            description = "Ocorreu um erro inesperado.",
-//                            content = @Content(schema = @Schema(implementation = ErrorObject.class)))
+//                            content = @Content(schema = @Schema(implementation = ErroDTO.class)))
 //            })
 //    @DeleteMapping(value = "/{id}")
 //    @ResponseStatus(NO_CONTENT)
-//    ClienteRequest delete(@PathVariable Long id);
+//    ResponseEntity<List<RestauranteResponse>> delete(@PathVariable Long id);
+
 }

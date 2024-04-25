@@ -1,6 +1,7 @@
 package com.dev.apptite.api.controller.restaurante;
 
 import com.dev.apptite.api.controller.restaurante.request.RestauranteRequest;
+import com.dev.apptite.api.controller.restaurante.request.RestauranteUpdateRequest;
 import com.dev.apptite.api.controller.restaurante.response.RestauranteResponse;
 import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.mapper.RestauranteMapper;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,16 +23,29 @@ public class RestauranteController implements IRestauranteController {
     @Override
     public ResponseEntity<RestauranteResponse> create(RestauranteRequest restauranteRequest) {
 
-        RestauranteDTO restauranteDTO = mapper.requestToDto(restauranteRequest);
-        RestauranteDTO restauranteDtoSalvo = service.salvar(restauranteDTO);
-        RestauranteResponse restauranteResponse = mapper.dtoToResponse(restauranteDtoSalvo);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(restauranteResponse);
+        RestauranteDTO restauranteDtoSalvo = service.salvar(mapper.requestToDto(restauranteRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.dtoToResponse(restauranteDtoSalvo));
     }
 
     @Override
-    public RestauranteResponse findAll() {
+    public ResponseEntity<List<RestauranteResponse>> findAll() {
 
-        return null;
+        List<RestauranteDTO> restaurantesDTO = service.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(restaurantesDTO));
     }
+
+    @Override
+    public ResponseEntity<RestauranteResponse> update(RestauranteUpdateRequest request, Long id) {
+
+        RestauranteDTO restauranteDtoAtualizado = service.update(request, id);
+        return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(restauranteDtoAtualizado));
+    }
+
+
+    // criar um endpoint do tipo put onde vou receber um restaurante request no body e um id por query param
+    // no controller chamar um service e no service chamar um repository.findbyid para recuperar o restaurante
+    // fazer um mapper de restaurante request para dto
+    // setar o id recebido no query param no dto
+    // converter a dto(com id) para entity e salvar com no banco usando repository.save
+
 }

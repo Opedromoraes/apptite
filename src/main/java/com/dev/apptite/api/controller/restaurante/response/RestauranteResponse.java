@@ -9,5 +9,5 @@ import lombok.*;
 public class RestauranteResponse {
     Long idRestaurante;
     String nome;
-    String endeco;
+    String endereco;
 }

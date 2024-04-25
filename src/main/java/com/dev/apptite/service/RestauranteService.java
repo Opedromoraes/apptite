@@ -1,12 +1,17 @@
 package com.dev.apptite.service;
 
+import com.dev.apptite.api.controller.restaurante.request.RestauranteUpdateRequest;
 import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.entity.RestauranteEntity;
 import com.dev.apptite.domain.mapper.RestauranteMapper;
 import com.dev.apptite.repository.RestauranteRepository;
+import com.fasterxml.jackson.databind.util.BeanUtil;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -17,30 +22,30 @@ public class RestauranteService {
 
     public RestauranteDTO salvar(RestauranteDTO restauranteDTO) {
 
-        RestauranteEntity restauranteEntity = mapper.dtoToEntity(restauranteDTO);
-        RestauranteEntity restaurante = repository.save(restauranteEntity);
-        RestauranteDTO restauranteDtoSalvo = mapper.entityToDTO(restaurante);
-
-        return restauranteDtoSalvo;
+        RestauranteEntity restaurante = repository.save(mapper.dtoToEntity(restauranteDTO));
+        return mapper.entityToDTO(restaurante);
     }
 
+    public List<RestauranteDTO> findAll() {
 
-//    public ClienteDTO salvar(ClienteDTO clienteDTO) {
-//        Cliente cliente = new Cliente();
-//        cliente.setEmail(clienteDTO.getEmail());
-//        cliente.setNome(clienteDTO.getNome());
-//
-//        Cliente clienteSalvo = repository.save(cliente);
-//
-//        ClienteDTO clienteDTOSalvo = new ClienteDTO();
-//        clienteDTOSalvo.setId(clienteSalvo.getId());
-//        clienteDTOSalvo.setNome(clienteSalvo.getNome());
-//        clienteDTOSalvo.setEmail(clienteSalvo.getEmail());
-//        clienteDTOSalvo.setUpdatedAt(clienteSalvo.getUpdatedAt());
-//        clienteDTOSalvo.setUpdatedBy(clienteSalvo.getUpdatedBy());
-//        clienteDTOSalvo.setCreatedAt(clienteSalvo.getCreatedAt());
-//        clienteDTOSalvo.setCreatedBy(clienteSalvo.getCreatedBy());
-//
-//        return clienteDTOSalvo;
-//    }
+        List<RestauranteEntity> restaurantes = repository.findAll();
+        return mapper.entityToDTO(restaurantes);
+    }
+
+    public RestauranteDTO update(RestauranteUpdateRequest request, Long id) {
+
+        RestauranteDTO restauranteDTO = findById(id);
+        RestauranteDTO restauranteNovoDTO = mapper.requestUpdateToDto(request);
+        BeanUtils.copyProperties(restauranteNovoDTO, restauranteDTO, "idRestaurante");
+
+        RestauranteEntity restaurante = repository.save(mapper.dtoToEntity(restauranteDTO));
+
+        return mapper.entityToDTO(restaurante);
+    }
+
+    public RestauranteDTO findById(Long id) {
+
+        RestauranteEntity restaurante = repository.findById(id).orElseThrow();
+        return mapper.entityToDTO(restaurante);
+    }
 }
