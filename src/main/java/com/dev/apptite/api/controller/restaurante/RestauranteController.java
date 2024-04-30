@@ -41,6 +41,19 @@ public class RestauranteController implements IRestauranteController {
         return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(restauranteDtoAtualizado));
     }
 
+    @Override
+    public ResponseEntity<RestauranteResponse> findById(Long id) {
+        RestauranteDTO restauranteDTO = service.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(restauranteDTO));
+
+    }
+
+    @Override
+    public ResponseEntity<Void> delete(Long id) {
+        service.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    }
+
 
     // criar um endpoint do tipo put onde vou receber um restaurante request no body e um id por query param
     // no controller chamar um service e no service chamar um repository.findbyid para recuperar o restaurante

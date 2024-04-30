@@ -3,14 +3,14 @@ package com.dev.apptite.service;
 import com.dev.apptite.api.controller.restaurante.request.RestauranteUpdateRequest;
 import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.entity.RestauranteEntity;
+import com.dev.apptite.domain.exceptions.NotFoundException;
 import com.dev.apptite.domain.mapper.RestauranteMapper;
 import com.dev.apptite.repository.RestauranteRepository;
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,6 +21,19 @@ public class RestauranteService {
     private final RestauranteRepository repository;
 
     public RestauranteDTO salvar(RestauranteDTO restauranteDTO) {
+
+        List<String> errors = new ArrayList<>();
+
+        if (restauranteDTO.getNome() == null){
+            errors.add("O nome não pode ser nulo");
+        }
+
+        if (restauranteDTO.getEndereco() == null){
+            errors.add("O endereço não pode ser nulo");
+        }
+        if (!errors.isEmpty()){
+            throw new NotFoundException("base.message.error",errors);
+        }
 
         RestauranteEntity restaurante = repository.save(mapper.dtoToEntity(restauranteDTO));
         return mapper.entityToDTO(restaurante);
@@ -47,5 +60,9 @@ public class RestauranteService {
 
         RestauranteEntity restaurante = repository.findById(id).orElseThrow();
         return mapper.entityToDTO(restaurante);
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
     }
 }
