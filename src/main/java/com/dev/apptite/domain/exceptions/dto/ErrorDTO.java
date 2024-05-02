@@ -1,7 +1,6 @@
 package com.dev.apptite.domain.exceptions.dto;
 
 import lombok.*;
-import org.springframework.http.HttpStatusCode;
 
 import java.util.List;
 
