@@ -11,5 +11,4 @@ import java.util.List;
 public class ErrorDTO {
     private final String message;
     private final List<String> errors;
-    private final HttpStatusCode status;
 }

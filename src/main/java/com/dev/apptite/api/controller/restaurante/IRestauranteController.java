@@ -18,10 +18,6 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
 
-//@Tag(name = "Restaurante")
-//@RestController()
-//@RequestMapping(value = "/restaurantes")
-//@Validated
 @RestController
 @Tag(name = "Restaurantes")
 @RequestMapping(value = "/restaurantes")

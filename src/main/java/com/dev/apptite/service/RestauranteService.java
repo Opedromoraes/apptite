@@ -5,6 +5,7 @@ import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.entity.RestauranteEntity;
 import com.dev.apptite.domain.exceptions.NotFoundException;
 import com.dev.apptite.domain.mapper.RestauranteMapper;
+import com.dev.apptite.domain.utils.MessageUtils;
 import com.dev.apptite.repository.RestauranteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -19,22 +20,9 @@ public class RestauranteService {
 
     private final RestauranteMapper mapper;
     private final RestauranteRepository repository;
+    private final MessageUtils messageUtils;
 
     public RestauranteDTO salvar(RestauranteDTO restauranteDTO) {
-
-        List<String> errors = new ArrayList<>();
-
-        if (restauranteDTO.getNome() == null){
-            errors.add("O nome não pode ser nulo");
-        }
-
-        if (restauranteDTO.getEndereco() == null){
-            errors.add("O endereço não pode ser nulo");
-        }
-        if (!errors.isEmpty()){
-            throw new NotFoundException("base.message.error",errors);
-        }
-
         RestauranteEntity restaurante = repository.save(mapper.dtoToEntity(restauranteDTO));
         return mapper.entityToDTO(restaurante);
     }

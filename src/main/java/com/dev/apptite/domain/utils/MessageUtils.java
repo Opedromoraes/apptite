@@ -1,5 +1,6 @@
-package com.dev.apptite.domain.config;
+package com.dev.apptite.domain.utils;
 
+import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
@@ -10,7 +11,8 @@ import org.springframework.stereotype.Component;
 import java.util.Locale;
 
 @Component
-public class MessageService implements MessageSource {
+@AllArgsConstructor
+public class MessageUtils implements MessageSource {
     private final MessageSource messageSource;
 
     public String getMessage(String code) {
@@ -33,7 +35,4 @@ public class MessageService implements MessageSource {
         return this.messageSource.getMessage(resolvable, locale);
     }
 
-    public MessageService(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
 }

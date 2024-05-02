@@ -3,13 +3,15 @@ package com.dev.apptite.domain.exceptions;
 import lombok.Getter;
 import org.springframework.http.HttpStatusCode;
 
+import java.util.List;
+
 @Getter
 public class BaseException extends RuntimeException {
 
-    private final Object[] errors;
+    private final List<String> errors;
     private final HttpStatusCode status;
 
-    public BaseException(String message, HttpStatusCode status, Object... errors) {
+    public BaseException(String message, HttpStatusCode status, List<String> errors) {
         super(message);
         this.status = status;
         this.errors = errors;
