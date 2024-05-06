@@ -2,9 +2,8 @@ package com.dev.apptite.service;
 
 import com.dev.apptite.api.controller.restaurante.request.RestauranteUpdateRequest;
 import com.dev.apptite.domain.dto.RestauranteDTO;
-import com.dev.apptite.domain.entity.RestauranteEntity;
+import com.dev.apptite.domain.entity.Restaurante;
 import com.dev.apptite.domain.mapper.RestauranteMapper;
-import com.dev.apptite.domain.utils.MessageUtils;
 import com.dev.apptite.repository.RestauranteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -20,13 +19,13 @@ public class RestauranteService {
     private final RestauranteRepository repository;
 
     public RestauranteDTO salvar(RestauranteDTO restauranteDTO) {
-        RestauranteEntity restaurante = repository.save(mapper.dtoToEntity(restauranteDTO));
+        Restaurante restaurante = repository.save(mapper.dtoToEntity(restauranteDTO));
         return mapper.entityToDTO(restaurante);
     }
 
     public List<RestauranteDTO> findAll() {
 
-        List<RestauranteEntity> restaurantes = repository.findAll();
+        List<Restaurante> restaurantes = repository.findAll();
         return mapper.entityToDTO(restaurantes);
     }
 
@@ -36,14 +35,14 @@ public class RestauranteService {
         RestauranteDTO restauranteNovoDTO = mapper.requestUpdateToDto(request);
         BeanUtils.copyProperties(restauranteNovoDTO, restauranteDTO, "idRestaurante");
 
-        RestauranteEntity restaurante = repository.save(mapper.dtoToEntity(restauranteDTO));
+        Restaurante restaurante = repository.save(mapper.dtoToEntity(restauranteDTO));
 
         return mapper.entityToDTO(restaurante);
     }
 
     public RestauranteDTO findById(Long id) {
 
-        RestauranteEntity restaurante = repository.findById(id).orElseThrow();
+        Restaurante restaurante = repository.findById(id).orElseThrow();
         return mapper.entityToDTO(restaurante);
     }
 
