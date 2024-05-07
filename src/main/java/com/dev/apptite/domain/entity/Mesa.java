@@ -4,16 +4,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-import java.util.Set;
-
-
 @Entity
-@Table(name = "produto")
+@Table(name = "mesa")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
-public class Produto {
+public class Mesa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,14 +20,5 @@ public class Produto {
     @Column(name = "nome", nullable = false)
     String nome;
 
-    @ManyToOne
-    @JoinColumn(name = "cardapio_id", nullable = false)
-    private Cardapio cardapio;
 
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Set<Variacao> variacao;
-
-    @ManyToOne
-    @JoinColumn(name = "pedido_id",nullable = false)
-    private Pedido pedido;
 }
