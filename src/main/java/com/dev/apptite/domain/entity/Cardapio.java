@@ -27,5 +27,6 @@ public class Cardapio {
     private Restaurante restaurante;
 
     @OneToMany(mappedBy = "cardapio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Produto> produtos;
+    private Set<Categoria> categorias;
+
 }

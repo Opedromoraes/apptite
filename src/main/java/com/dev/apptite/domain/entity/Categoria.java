@@ -5,15 +5,13 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.Set;
-
-
 @Entity
-@Table(name = "produto")
+@Table(name = "categoria")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
-public class Produto {
+public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,13 +22,7 @@ public class Produto {
     String nome;
 
     @ManyToOne
-    @JoinColumn(name = "cardapio_id", nullable = false)
+    @JoinColumn(name = "cardapio_id",nullable = false)
     private Cardapio cardapio;
 
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Set<Variacao> variacao;
-
-    @ManyToOne
-    @JoinColumn(name = "pedido_id",nullable = false)
-    private Pedido pedido;
 }

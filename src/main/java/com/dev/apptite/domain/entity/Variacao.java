@@ -21,6 +21,6 @@ public class Variacao {
         String nome;
 
         @ManyToOne
-        @JoinColumn(name = "produto_id", nullable = false)
-        private Produto produto;
+        @JoinColumn(name = "item_id", nullable = false)
+        private Item item;
 }

@@ -8,12 +8,12 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "restaurante")
+@Table(name = "item")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
-public class Restaurante {
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,13 +23,11 @@ public class Restaurante {
     @Column(name = "nome", nullable = false)
     String nome;
 
-    @NotBlank(message = "O endereço é obrigatório")
-    @Column(name = "endereco", nullable = false)
-    String endereco;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cardapio_id", referencedColumnName = "id")
-    private Cardapio cardapio;
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Set<Variacao> variacao;
 
-
+    @ManyToOne
+    @JoinColumn(name = "pedido_id",nullable = false)
+    private Pedido pedido;
 }
