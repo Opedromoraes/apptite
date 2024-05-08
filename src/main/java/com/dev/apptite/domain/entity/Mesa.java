@@ -16,9 +16,11 @@ public class Mesa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O nome é obrigatório")
-    @Column(name = "nome", nullable = false)
-    String nome;
+    @NotBlank(message = "O número é obrigatório")
+    @Column(name = "numero", nullable = false)
+    int numero;
 
-
+    @ManyToOne
+    @JoinColumn(name = "restaurante_id",nullable = false)
+    private Restaurante restaurante;
 }
