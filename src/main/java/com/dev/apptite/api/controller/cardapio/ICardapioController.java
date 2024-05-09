@@ -2,7 +2,6 @@ package com.dev.apptite.api.controller.cardapio;
 
 import com.dev.apptite.api.controller.cardapio.request.CardapioRequest;
 import com.dev.apptite.api.controller.cardapio.response.CardapioResponse;
-import com.dev.apptite.api.controller.restaurante.request.RestauranteRequest;
 import com.dev.apptite.api.controller.restaurante.response.RestauranteResponse;
 import com.dev.apptite.domain.exceptions.dto.ErrorDTO;
 import io.swagger.v3.oas.annotations.Operation;

@@ -65,33 +65,6 @@ public interface ICategoriaController {
     @ResponseStatus(OK)
     ResponseEntity<List<CategoriaResponse>> findAll();
 
-
-
-    @Operation(
-            summary = "Atualizar Categoria",
-            description = "Endpoint responsável por atualizar um categoria",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Categoria atualizado com sucesso.",
-                            content = @Content(schema = @Schema(implementation = CategoriaResponse.class))),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Categoria não encontrado.",
-                            content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
-                    @ApiResponse(
-                            responseCode = "422",
-                            description = "Requisição possui pelo menos um valor faltante ou inválido.",
-                            content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Ocorreu um erro inesperado.",
-                            content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
-            })
-    /*@PutMapping("{id}")
-    @ResponseStatus(OK)
-    ResponseEntity<CategoriaResponse> update(@Valid @RequestBody CategoriaUpdateRequest request, @PathVariable Long id);*/
-
     @Operation(
             summary = "Buscar categoria por id",
             description = "Endpoint responsável por buscar um categoria",

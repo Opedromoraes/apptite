@@ -1,34 +1,38 @@
 package com.dev.apptite.service;
 
-import com.dev.apptite.api.controller.restaurante.request.RestauranteUpdateRequest;
 import com.dev.apptite.domain.dto.CardapioDTO;
-import com.dev.apptite.domain.dto.RestauranteDTO;
+import com.dev.apptite.domain.dto.CategoriaDTO;
 import com.dev.apptite.domain.entity.Cardapio;
-import com.dev.apptite.domain.entity.Restaurante;
 import com.dev.apptite.domain.mapper.CardapioMapper;
-import com.dev.apptite.domain.mapper.RestauranteMapper;
 import com.dev.apptite.repository.CardapioRepository;
-import com.dev.apptite.repository.RestauranteRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.Optional.ofNullable;
+
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
 public class CardapioService {
 
     private final CardapioMapper mapper;
     private final CardapioRepository repository;
+    private final CategoriaService categoriaService;
 
     public CardapioDTO salvar(CardapioDTO cardapioDTO) {
 
+        List<CategoriaDTO> categorias = ofNullable(cardapioDTO.getCategorias()).orElse(List.of());
 
-        Cardapio cardapio = repository.save(mapper.dtoToEntity(cardapioDTO));
-        return mapper.entityToDTO(cardapio);
+        if (!categorias.isEmpty()) {
+            List<CategoriaDTO> categoriasId = categoriaService.findCategoriasId(cardapioDTO.getCategoriasId());
+            cardapioDTO.setCategorias(categoriasId);
+        }
+
+        Cardapio cardapio = mapper.dtoToEntity(cardapioDTO);
+        Cardapio cardapioSalvo = repository.save(cardapio);
+
+        return mapper.entityToDTO(cardapioSalvo);
     }
 
 }

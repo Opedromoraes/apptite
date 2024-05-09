@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Builder
@@ -17,6 +17,6 @@ public class CardapioRequest {
     private String nome;
 
     @Schema(description = "Categorias", example = "1,2,3")
-    private Set<Long> categoriasId;
+    private List<Long> categoriasId;
 
 }

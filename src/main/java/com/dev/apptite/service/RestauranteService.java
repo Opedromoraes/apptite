@@ -6,7 +6,6 @@ import com.dev.apptite.domain.entity.Restaurante;
 import com.dev.apptite.domain.mapper.RestauranteMapper;
 import com.dev.apptite.repository.RestauranteRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,6 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
 public class RestauranteService {
 
     private final RestauranteMapper mapper;

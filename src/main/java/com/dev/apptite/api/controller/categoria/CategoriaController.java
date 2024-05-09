@@ -20,36 +20,30 @@ public class CategoriaController implements ICategoriaController {
     private final CategoriaService service;
 
     @Override
-    public ResponseEntity<CategoriaResponse> create(CategoriaRequest restauranteRequest) {
-
-        CategoriaDTO restauranteDtoSalvo = service.salvar(mapper.requestToDto(restauranteRequest));
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.dtoToResponse(restauranteDtoSalvo));
+    public ResponseEntity<CategoriaResponse> create(CategoriaRequest request) {
+        CategoriaDTO restauranteDtoSalvo = service.salvar(mapper.requestToDto(request));
+        CategoriaResponse response = mapper.dtoToResponse(restauranteDtoSalvo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @Override
     public ResponseEntity<List<CategoriaResponse>> findAll() {
-
         List<CategoriaDTO> restaurantesDTO = service.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(restaurantesDTO));
+        List<CategoriaResponse> response = mapper.dtoToResponse(restaurantesDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
-//    @Override
-//    public ResponseEntity<CategoriaResponse> update(CategoriaUpdateRequest request, Long id) {
-//
-//        CategoriaDTO restauranteDtoAtualizado = service.update(request, id);
-//        return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(restauranteDtoAtualizado));
-//    }
 
     @Override
     public ResponseEntity<CategoriaResponse> findById(Long id) {
         CategoriaDTO restauranteDTO = service.findById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(restauranteDTO));
+        CategoriaResponse response = mapper.dtoToResponse(restauranteDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
 
     @Override
     public ResponseEntity<Void> delete(Long id) {
         service.delete(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

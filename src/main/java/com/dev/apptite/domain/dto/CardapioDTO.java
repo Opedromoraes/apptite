@@ -1,9 +1,8 @@
 package com.dev.apptite.domain.dto;
 
-import com.dev.apptite.api.controller.categoria.response.CategoriaResponse;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
@@ -12,6 +11,6 @@ public class CardapioDTO {
 
     Long idCardapio;
     String nome;
-    Set<CategoriaDTO> categorias;
-    Set<Long> categoriasId;
+    List<CategoriaDTO> categorias;
+    List<Long> categoriasId;
 }

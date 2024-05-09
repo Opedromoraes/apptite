@@ -22,43 +22,32 @@ public class RestauranteController implements IRestauranteController {
 
     @Override
     public ResponseEntity<RestauranteResponse> create(RestauranteRequest restauranteRequest) {
-
-        RestauranteDTO restauranteDtoSalvo = service.salvar(mapper.requestToDto(restauranteRequest));
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.dtoToResponse(restauranteDtoSalvo));
+        RestauranteDTO response = service.salvar(mapper.requestToDto(restauranteRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.dtoToResponse(response));
     }
 
     @Override
     public ResponseEntity<List<RestauranteResponse>> findAll() {
-
-        List<RestauranteDTO> restaurantesDTO = service.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(restaurantesDTO));
+        List<RestauranteDTO> response = service.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(response));
     }
 
     @Override
     public ResponseEntity<RestauranteResponse> update(RestauranteUpdateRequest request, Long id) {
-
-        RestauranteDTO restauranteDtoAtualizado = service.update(request, id);
-        return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(restauranteDtoAtualizado));
+        RestauranteDTO response = service.update(request, id);
+        return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(response));
     }
 
     @Override
     public ResponseEntity<RestauranteResponse> findById(Long id) {
-        RestauranteDTO restauranteDTO = service.findById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(restauranteDTO));
+        RestauranteDTO response = service.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(response));
 
     }
 
     @Override
     public ResponseEntity<Void> delete(Long id) {
         service.delete(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
-
-    // criar um endpoint do tipo put onde vou receber um restaurante request no body e um id por query param
-    // no controller chamar um service e no service chamar um repository.findbyid para recuperar o restaurante
-    // fazer um mapper de restaurante request para dto
-    // setar o id recebido no query param no dto
-    // converter a dto(com id) para entity e salvar com no banco usando repository.save
-
 }

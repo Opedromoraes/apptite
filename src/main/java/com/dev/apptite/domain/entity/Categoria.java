@@ -4,13 +4,12 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-import java.util.Set;
 @Entity
 @Table(name = "categoria")
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class Categoria {
 
     @Id
@@ -22,7 +21,7 @@ public class Categoria {
     String nome;
 
     @ManyToOne
-    @JoinColumn(name = "cardapio_id",nullable = false)
+    @JoinColumn(name = "cardapio_id", nullable = false)
     private Cardapio cardapio;
 
 }

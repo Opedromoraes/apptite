@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 
 @Entity
@@ -12,7 +12,7 @@ import java.util.Set;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class Item {
 
     @Id
@@ -25,7 +25,7 @@ public class Item {
 
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Set<Variacao> variacao;
+    private List<Variacao> variacao;
 
     @ManyToOne
     @JoinColumn(name = "pedido_id",nullable = false)
