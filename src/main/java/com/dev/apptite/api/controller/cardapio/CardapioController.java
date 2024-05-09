@@ -26,6 +26,8 @@ public class CardapioController implements ICardapioController {
 
     @Override
     public ResponseEntity<CardapioResponse> duplicateMenu(CardapioRequest request, Long id) {
-        return null;
+        CardapioDTO cardapioDtoSalvo = service.duplicar(mapper.requestToDto(request), id);
+        CardapioResponse response = mapper.dtoToResponse(cardapioDtoSalvo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
