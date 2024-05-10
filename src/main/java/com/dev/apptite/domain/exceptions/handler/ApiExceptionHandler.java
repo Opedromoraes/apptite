@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestControllerAdvice
 @AllArgsConstructor
@@ -31,9 +33,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     })
     public ResponseEntity<ErrorDTO> handleBusinessException(BaseException ex) {
 
-        List<String> errors = ex.getErrors().stream()
-                .map(messageUtils::getMessage)
-                .toList();
+        List<String> errors = new ArrayList<>();
+        if (ex.getErrors() != null && !ex.getErrors().isEmpty()){
+            errors.addAll(ex.getErrors().stream()
+                    .map(messageUtils::getMessage)
+                    .toList());
+        }
 
         ErrorDTO errorDTO = ErrorDTO.builder()
                 .message(messageUtils.getMessage(ex.getMessage()))

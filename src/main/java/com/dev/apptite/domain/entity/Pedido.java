@@ -22,7 +22,7 @@ public class Pedido {
     @Column(name = "número", nullable = false)
     int numero;
 
-    @OneToMany(mappedBy = "pedido",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<Pedido> pedidos;
+//    @OneToMany(mappedBy = "pedido",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+//    private List<Pedido> pedidos;
 
 }

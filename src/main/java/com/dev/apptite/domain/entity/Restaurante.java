@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "restaurante")
@@ -15,7 +17,7 @@ public class Restaurante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idRestaurante;
 
     @NotBlank(message = "O nome é obrigatório")
     @Column(name = "nome", nullable = false)
@@ -25,9 +27,6 @@ public class Restaurante {
     @Column(name = "endereco", nullable = false)
     String endereco;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cardapio_id", referencedColumnName = "id")
-    private Cardapio cardapio;
-
-
+    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Categoria> categorias;
 }

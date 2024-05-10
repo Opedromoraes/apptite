@@ -5,12 +5,14 @@ import lombok.*;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class CategoriaDTO {
 
     Long idCategoria;
 
     String nome;
 
+    Long idRestaurante;
 
+    RestauranteDTO restaurante;
 }

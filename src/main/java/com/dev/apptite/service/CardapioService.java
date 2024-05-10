@@ -23,10 +23,10 @@ public class CardapioService {
 
     public CardapioDTO salvar(CardapioDTO cardapioDTO) {
 
-        if (isNotEmpty(cardapioDTO.getCategorias())) {
-            List<CategoriaDTO> categoriasDTO = categoriaService.findCategoriasId(cardapioDTO.getCategoriasId());
-            cardapioDTO.setCategorias(categoriasDTO);
-        }
+//        if (isNotEmpty(cardapioDTO.getCategorias())) {
+//            List<CategoriaDTO> categoriasDTO = categoriaService.findCategoriasId(cardapioDTO.getCategoriasId());
+//            cardapioDTO.setCategorias(categoriasDTO);
+//        }
 
         Cardapio cardapio = mapper.dtoToEntity(cardapioDTO);
         Cardapio cardapioSalvo = repository.save(cardapio);
@@ -38,11 +38,11 @@ public class CardapioService {
 
         CardapioDTO cardapioOriginal = findById(idOriginal);
 
-        if (isNotEmpty(cardapioNovoDTO.getCategoriasId())) {
-            List<CategoriaDTO> categoriasId = categoriaService.findCategoriasId(cardapioNovoDTO.getCategoriasId());
-            removeCategoriasDuplicadas(categoriasId, cardapioOriginal.getCategorias());
-            cardapioOriginal.setCategorias(categoriasId);
-        }
+//        if (isNotEmpty(cardapioNovoDTO.getCategoriasId())) {
+//            List<CategoriaDTO> categoriasId = categoriaService.findCategoriasId(cardapioNovoDTO.getCategoriasId());
+//            removeCategoriasDuplicadas(categoriasId, cardapioOriginal.getCategorias());
+//            cardapioOriginal.setCategorias(categoriasId);
+//        }
 
         Cardapio cardapio = mapper.dtoToEntity(cardapioOriginal);
         Cardapio cardapioSalvo = repository.save(cardapio);

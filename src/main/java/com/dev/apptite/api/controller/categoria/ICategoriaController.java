@@ -22,7 +22,7 @@ import static org.springframework.http.HttpStatus.*;
 @RequestMapping(value = "/categorias")
 @Validated
 public interface ICategoriaController {
-    
+
     @Operation(
             summary = "Criar Categoria",
             description = "Endpoint responsável por criar um novo categoria",
@@ -67,7 +67,7 @@ public interface ICategoriaController {
 
     @Operation(
             summary = "Buscar categoria por id",
-            description = "Endpoint responsável por buscar um categoria",
+            description = "Endpoint responsável por buscar uma categoria",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -85,6 +85,27 @@ public interface ICategoriaController {
     @GetMapping("{id}")
     @ResponseStatus(OK)
     ResponseEntity<CategoriaResponse> findById(@PathVariable Long id);
+
+    @Operation(
+            summary = "Buscar categoria por id do Restaurante",
+            description = "Endpoint responsável por buscar categorias de um Restaurante",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Categoria encontrado com sucesso.",
+                            content = @Content(schema = @Schema(implementation = CategoriaResponse.class))),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Categoria não encontrado.",
+                            content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Ocorreu um erro inesperado.",
+                            content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
+            })
+    @GetMapping("restaurante/{idRestaurante}")
+    @ResponseStatus(OK)
+    ResponseEntity<List<CategoriaResponse>> findByIdRestaurante(@PathVariable Long idRestaurante);
 
     @Operation(
             summary = "Deletar Categoria",

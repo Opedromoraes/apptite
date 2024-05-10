@@ -21,8 +21,8 @@ public class CategoriaController implements ICategoriaController {
 
     @Override
     public ResponseEntity<CategoriaResponse> create(CategoriaRequest request) {
-        CategoriaDTO restauranteDtoSalvo = service.salvar(mapper.requestToDto(request));
-        CategoriaResponse response = mapper.dtoToResponse(restauranteDtoSalvo);
+        CategoriaDTO categoriaDTO = service.salvar(mapper.requestToDto(request));
+        CategoriaResponse response = mapper.dtoToResponse(categoriaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -38,7 +38,13 @@ public class CategoriaController implements ICategoriaController {
         CategoriaDTO restauranteDTO = service.findById(id);
         CategoriaResponse response = mapper.dtoToResponse(restauranteDTO);
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
+    @Override
+    public ResponseEntity<List<CategoriaResponse>> findByIdRestaurante(Long idRestaurante) {
+        List<CategoriaDTO> restauranteDTO = service.findByIdRestaurante(idRestaurante);
+        List<CategoriaResponse> response = mapper.dtoToResponse(restauranteDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @Override

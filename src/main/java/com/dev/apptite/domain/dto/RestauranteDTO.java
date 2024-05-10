@@ -5,7 +5,7 @@ import lombok.*;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class RestauranteDTO {
     Long idRestaurante;
     String nome;
