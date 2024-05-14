@@ -2,7 +2,9 @@ package com.dev.apptite.service;
 
 import com.dev.apptite.domain.dto.CardapioDTO;
 import com.dev.apptite.domain.dto.CategoriaDTO;
+import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.entity.Cardapio;
+import com.dev.apptite.domain.exceptions.BusinessException;
 import com.dev.apptite.domain.exceptions.NotFoundException;
 import com.dev.apptite.domain.mapper.CardapioMapper;
 import com.dev.apptite.repository.CardapioRepository;
@@ -10,8 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -19,45 +20,54 @@ public class CardapioService {
 
     private final CardapioMapper mapper;
     private final CardapioRepository repository;
+    private final RestauranteService restauranteService;
     private final CategoriaService categoriaService;
 
     public CardapioDTO salvar(CardapioDTO cardapioDTO) {
 
-//        if (isNotEmpty(cardapioDTO.getCategorias())) {
-//            List<CategoriaDTO> categoriasDTO = categoriaService.findCategoriasId(cardapioDTO.getCategoriasId());
-//            cardapioDTO.setCategorias(categoriasDTO);
-//        }
+        validacaoCardapio(cardapioDTO);
 
-        Cardapio cardapio = mapper.dtoToEntity(cardapioDTO);
-        Cardapio cardapioSalvo = repository.save(cardapio);
+        if (cardapioDTO.getCategoriasId() != null) {
+            List<CategoriaDTO> categoriasDTO = categoriaService.findAllByIds(cardapioDTO.getCategoriasId());
+            categoriasDTO.forEach(categoriaDTO -> categoriaDTO.setIdCardapio(cardapioDTO.getIdCardapio()));
+            cardapioDTO.setCategorias(categoriasDTO);
+        }
 
-        return mapper.entityToDTO(cardapioSalvo);
-    }
+        RestauranteDTO restauranteDTO = restauranteService.findById(cardapioDTO.getIdRestaurante());
+        cardapioDTO.setRestaurante(restauranteDTO);
 
-    public CardapioDTO duplicar(CardapioDTO cardapioNovoDTO, Long idOriginal) {
+        Cardapio cardapio = repository.save(mapper.dtoToEntity(cardapioDTO));
 
-        CardapioDTO cardapioOriginal = findById(idOriginal);
-
-//        if (isNotEmpty(cardapioNovoDTO.getCategoriasId())) {
-//            List<CategoriaDTO> categoriasId = categoriaService.findCategoriasId(cardapioNovoDTO.getCategoriasId());
-//            removeCategoriasDuplicadas(categoriasId, cardapioOriginal.getCategorias());
-//            cardapioOriginal.setCategorias(categoriasId);
-//        }
-
-        Cardapio cardapio = mapper.dtoToEntity(cardapioOriginal);
-        Cardapio cardapioSalvo = repository.save(cardapio);
-
-        return mapper.entityToDTO(cardapioSalvo);
-    }
-
-    public CardapioDTO findById(Long idOriginal) {
-        Cardapio cardapio = repository.findById(idOriginal)
-                .orElseThrow(() -> new NotFoundException("Cardápio não encontrado"));
         return mapper.entityToDTO(cardapio);
     }
 
-    private void removeCategoriasDuplicadas(List<CategoriaDTO> categoriasId, List<CategoriaDTO> categorias) {
-        categoriasId.removeIf(categoriaId -> categorias.stream()
-                .anyMatch(categoria -> categoria.getIdCategoria().equals(categoriaId.getIdCategoria())));
+    public CardapioDTO findById(Long id) {
+        Cardapio cardapio = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("base.message.error", List.of("menu.not-found.error")));
+        return mapper.entityToDTO(cardapio);
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
+
+    private void validacaoCardapio(CardapioDTO cardapioDTO) {
+        Optional<Cardapio> cardapioOptional = repository.findByNome(cardapioDTO.getNome());
+        cardapioOptional.ifPresent(cardapio -> {
+            throw new BusinessException("duplicate.menu.error");
+        });
+    }
+
+    public CardapioDTO adicionarOuRemoverCategoria(Long id, Long idCategoria, Boolean isAdd) {
+
+        CardapioDTO cardapioDTO = findById(id);
+        CategoriaDTO categoriaDTO = categoriaService.findById(idCategoria);
+        if (isAdd) {
+            cardapioDTO.getCategoriasId().add(categoriaDTO.getIdCategoria());
+        } else {
+            cardapioDTO.getCategoriasId().remove(categoriaDTO.getIdCategoria());
+        }
+        return salvar(cardapioDTO);
     }
 }

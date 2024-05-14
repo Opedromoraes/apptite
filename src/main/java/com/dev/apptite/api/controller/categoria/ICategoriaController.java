@@ -71,11 +71,11 @@ public interface ICategoriaController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Categoria encontrado com sucesso.",
+                            description = "Categoria encontrada com sucesso.",
                             content = @Content(schema = @Schema(implementation = CategoriaResponse.class))),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Categoria não encontrado.",
+                            description = "Categoria não encontrada.",
                             content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
                     @ApiResponse(
                             responseCode = "500",
@@ -109,15 +109,15 @@ public interface ICategoriaController {
 
     @Operation(
             summary = "Deletar Categoria",
-            description = "Endpoint responsável por deletar um cliente",
+            description = "Endpoint responsável por deletar uma categoria",
             responses = {
                     @ApiResponse(
                             responseCode = "204",
-                            description = "Categoria deletado com sucesso."
+                            description = "Categoria deletada com sucesso."
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Categoria não encontrado.",
+                            description = "Categoria não encontrada.",
                             content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
                     @ApiResponse(
                             responseCode = "500",

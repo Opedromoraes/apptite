@@ -2,6 +2,7 @@ package com.dev.apptite.api.controller.cardapio;
 
 import com.dev.apptite.api.controller.cardapio.request.CardapioRequest;
 import com.dev.apptite.api.controller.cardapio.response.CardapioResponse;
+import com.dev.apptite.api.controller.categoria.response.CategoriaResponse;
 import com.dev.apptite.api.controller.restaurante.response.RestauranteResponse;
 import com.dev.apptite.domain.exceptions.dto.ErrorDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,11 +11,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.*;
+
 @RestController
 @Tag(name = "Cardapios")
 @RequestMapping(value = "/cardapios")
@@ -43,12 +46,54 @@ public interface ICardapioController {
         ResponseEntity<CardapioResponse> create(@Valid @RequestBody CardapioRequest cardapioRequest);
 
         @Operation(
-                summary = "Duplicar Cardapio",
-                description = "Endpoint responsável por duplicar um novo cardapio",
+                summary = "Buscar cardapio por id",
+                description = "Endpoint responsável por buscar um cardapio",
+                responses = {
+                        @ApiResponse(
+                                responseCode = "200",
+                                description = "Cardapio encontrado com sucesso.",
+                                content = @Content(schema = @Schema(implementation = CategoriaResponse.class))),
+                        @ApiResponse(
+                                responseCode = "404",
+                                description = "Cardapio não encontrado.",
+                                content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
+                        @ApiResponse(
+                                responseCode = "500",
+                                description = "Ocorreu um erro inesperado.",
+                                content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
+                })
+        @GetMapping("{id}")
+        @ResponseStatus(OK)
+        ResponseEntity<CardapioResponse> findById(@PathVariable Long id);
+
+        @Operation(
+                summary = "Deletar Cardapio",
+                description = "Endpoint responsável por deletar um cardapio",
+                responses = {
+                        @ApiResponse(
+                                responseCode = "204",
+                                description = "Cardapio deletado com sucesso."
+                        ),
+                        @ApiResponse(
+                                responseCode = "404",
+                                description = "Cardapio não encontrado.",
+                                content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
+                        @ApiResponse(
+                                responseCode = "500",
+                                description = "Ocorreu um erro inesperado.",
+                                content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
+                })
+        @DeleteMapping(value = "/{id}")
+        @ResponseStatus(NO_CONTENT)
+        ResponseEntity<Void> delete(@PathVariable Long id);
+
+        @Operation(
+                summary = "Adicionar ou Remover Categoria",
+                description = "Endpoint responsável por adicionar ou remover uma categoria",
                 responses = {
                         @ApiResponse(
                                 responseCode = "201",
-                                description = "Cardapio duplicado com sucesso.",
+                                description = "Categoria adicionada ou removida com sucesso.",
                                 content = @Content(schema = @Schema(implementation = RestauranteResponse.class))),
                         @ApiResponse(
                                 responseCode = "422",
@@ -59,7 +104,8 @@ public interface ICardapioController {
                                 description = "Ocorreu um erro inesperado.",
                                 content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
                 })
-        @PostMapping("{id}")
+        @PostMapping("{id}/categoria/{idCategoria}")
         @ResponseStatus(CREATED)
-        ResponseEntity<CardapioResponse> duplicateMenu(@Valid @RequestBody CardapioRequest cardapioRequest, @PathVariable Long id);
+        ResponseEntity<CardapioResponse> addOrRemoveCategory(@PathVariable Long id, @PathVariable Long idCategoria, @RequestParam Boolean isAdd);
+
 }

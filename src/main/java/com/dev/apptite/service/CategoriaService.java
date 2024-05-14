@@ -4,6 +4,7 @@ import com.dev.apptite.domain.dto.CategoriaDTO;
 import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.entity.Categoria;
 import com.dev.apptite.domain.exceptions.BusinessException;
+import com.dev.apptite.domain.exceptions.NotFoundException;
 import com.dev.apptite.domain.mapper.CategoriaMapper;
 import com.dev.apptite.repository.CategoriaRepository;
 import lombok.AllArgsConstructor;
@@ -47,8 +48,16 @@ public class CategoriaService {
         return mapper.entityToDTO(categorias);
     }
 
+    public List<CategoriaDTO> findAllByIds(List<Long> ids) {
+        List<Categoria> categorias = repository.findByIds(ids);
+        if (categorias.isEmpty()){
+            throw new NotFoundException("base.message.error",List.of("category.not-found.error"));
+        }
+        return mapper.entityToDTO(categorias);
+    }
+
     private void validacaoCategoria(CategoriaDTO categoriaDTO) {
-        Optional<Categoria> categoriaOptional = repository.findByName(categoriaDTO.getNome());
+        Optional<Categoria> categoriaOptional = repository.findByNome(categoriaDTO.getNome());
         categoriaOptional.ifPresent(categoria ->{
             throw new BusinessException("duplicate.category.error");
         });

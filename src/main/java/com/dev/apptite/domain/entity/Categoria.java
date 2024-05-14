@@ -23,4 +23,8 @@ public class Categoria {
     @ManyToOne
     @JoinColumn(name = "restaurante_id")
     private Restaurante restaurante;
+
+    @ManyToOne
+    @JoinColumn(name = "cardapio_id")
+    private Cardapio cardapio;
 }

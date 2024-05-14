@@ -15,4 +15,6 @@ public class CategoriaDTO {
     Long idRestaurante;
 
     RestauranteDTO restaurante;
+
+    Long idCardapio;
 }

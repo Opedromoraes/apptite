@@ -35,8 +35,8 @@ public class CategoriaController implements ICategoriaController {
 
     @Override
     public ResponseEntity<CategoriaResponse> findById(Long id) {
-        CategoriaDTO restauranteDTO = service.findById(id);
-        CategoriaResponse response = mapper.dtoToResponse(restauranteDTO);
+        CategoriaDTO categoriaDTO = service.findById(id);
+        CategoriaResponse response = mapper.dtoToResponse(categoriaDTO);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

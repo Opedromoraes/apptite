@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "cardapio")
@@ -20,5 +22,8 @@ public class Cardapio {
     @NotBlank(message = "O nome é obrigatório")
     @Column(name = "nome", nullable = false)
     String nome;
+
+    @OneToMany(mappedBy = "cardapio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    List<Categoria> categorias;
 
 }
