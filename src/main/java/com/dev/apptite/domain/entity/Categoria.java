@@ -5,10 +5,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+@Builder(toBuilder = true)
 @Entity
 @Table(name = "categoria")
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Categoria {
@@ -26,8 +26,7 @@ public class Categoria {
     private Restaurante restaurante;
 
     @ManyToOne
-    @JoinColumn(name = "id_cardapio")
-    @JsonIgnore
+    @JoinColumn(name = "id_cardapio", insertable = false, updatable = false)
     private Cardapio cardapio;
 
 }

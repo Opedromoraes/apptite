@@ -1,9 +1,12 @@
 package com.dev.apptite.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
 
@@ -24,12 +27,16 @@ public class Cardapio {
     @Column(name = "nome", nullable = false)
     String nome;
 
-    @OneToMany(mappedBy = "cardapio", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @OneToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE,
+            CascadeType.REMOVE
+    })
+    @Fetch(FetchMode.SELECT)
+    @JoinColumn(name = "id_cardapio")
     List<Categoria> categorias;
 
     @ManyToOne
     @JoinColumn(name = "restaurante_id")
-    @JsonIgnore
     private Restaurante restaurante;
 }

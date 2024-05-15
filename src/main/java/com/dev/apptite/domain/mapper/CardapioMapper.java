@@ -6,14 +6,10 @@ import com.dev.apptite.domain.dto.CardapioDTO;
 import com.dev.apptite.domain.entity.Cardapio;
 import org.mapstruct.Mapper;
 
-import java.util.List;
-
 @Mapper(uses = CategoriaMapper.class, componentModel = "spring")
 public interface CardapioMapper {
 
     CardapioDTO entityToDTO(Cardapio entity);
-
-    List<CardapioDTO> entityToDTO(List<Cardapio> entity);
 
     Cardapio dtoToEntity(CardapioDTO dto);
 

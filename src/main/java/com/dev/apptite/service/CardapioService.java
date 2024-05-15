@@ -79,8 +79,12 @@ public class CardapioService {
     private void associarCategorias(CardapioDTO cardapioDTO) {
         if (cardapioDTO.getIdsCategoria() != null) {
             cardapioDTO.getIdsCategoria()
-                    .forEach(idCategoria ->
-                            cardapioDTO.getCategorias().add(categoriaService.findById(idCategoria)));
+                    .forEach(idCategoria -> {
+                        List<CategoriaDTO> categorias = new ArrayList<>();
+                        CategoriaDTO categoriaDTO = categoriaService.findById(idCategoria);
+                        categorias.add(categoriaDTO);
+                        cardapioDTO.setCategorias(categorias);
+                    });
         }
     }
 
