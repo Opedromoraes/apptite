@@ -2,9 +2,7 @@ package com.dev.apptite.api.controller.cardapio;
 
 import com.dev.apptite.api.controller.cardapio.request.CardapioRequest;
 import com.dev.apptite.api.controller.cardapio.response.CardapioResponse;
-import com.dev.apptite.api.controller.categoria.response.CategoriaResponse;
 import com.dev.apptite.domain.dto.CardapioDTO;
-import com.dev.apptite.domain.dto.CategoriaDTO;
 import com.dev.apptite.domain.mapper.CardapioMapper;
 import com.dev.apptite.service.CardapioService;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +19,13 @@ public class CardapioController implements ICardapioController {
 
     @Override
     public ResponseEntity<CardapioResponse> create(CardapioRequest request) {
-        CardapioDTO cardapioDtoSalvo = service.salvar(mapper.requestToDto(request));
-        CardapioResponse response = mapper.dtoToResponse(cardapioDtoSalvo);
+        CardapioDTO cardapioDTO = service.salvar(mapper.requestToDto(request));
+        CardapioResponse response = mapper.dtoToResponse(cardapioDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @Override
     public ResponseEntity<CardapioResponse> findById(Long id) {
-
         CardapioDTO cardapioDTO = service.findById(id);
         CardapioResponse response = mapper.dtoToResponse(cardapioDTO);
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -42,14 +39,9 @@ public class CardapioController implements ICardapioController {
 
     @Override
     public ResponseEntity<CardapioResponse> addOrRemoveCategory(Long id, Long idCategoria, Boolean isAdd) {
-
         CardapioDTO cardapioDTO = service.adicionarOuRemoverCategoria(id, idCategoria, isAdd);
         CardapioResponse response = mapper.dtoToResponse(cardapioDTO);
-
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
-    // adicionar/remover categoria no cardapio por id(receber no controller um idCategoria e um boolean isAdd if isAdd = true = add // if isAdd = false = remove)
-
 
 }

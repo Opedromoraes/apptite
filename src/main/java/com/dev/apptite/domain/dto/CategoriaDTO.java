@@ -8,13 +8,10 @@ import lombok.*;
 @NoArgsConstructor
 public class CategoriaDTO {
 
-    Long idCategoria;
+    private Long idCategoria;
+    private String nome;
+    private Long idRestaurante;
+    private RestauranteDTO restaurante;
+    private Long idCardapio;
 
-    String nome;
-
-    Long idRestaurante;
-
-    RestauranteDTO restaurante;
-
-    Long idCardapio;
 }

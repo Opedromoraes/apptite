@@ -1,5 +1,6 @@
 package com.dev.apptite.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -23,7 +24,12 @@ public class Cardapio {
     @Column(name = "nome", nullable = false)
     String nome;
 
-    @OneToMany(mappedBy = "cardapio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "cardapio", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JsonIgnore
     List<Categoria> categorias;
 
+    @ManyToOne
+    @JoinColumn(name = "restaurante_id")
+    @JsonIgnore
+    private Restaurante restaurante;
 }

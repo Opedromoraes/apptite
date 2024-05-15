@@ -28,8 +28,8 @@ public class CategoriaController implements ICategoriaController {
 
     @Override
     public ResponseEntity<List<CategoriaResponse>> findAll() {
-        List<CategoriaDTO> restaurantesDTO = service.findAll();
-        List<CategoriaResponse> response = mapper.dtoToResponse(restaurantesDTO);
+        List<CategoriaDTO> categoriasDTO = service.findAll();
+        List<CategoriaResponse> response = mapper.dtoToResponse(categoriasDTO);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

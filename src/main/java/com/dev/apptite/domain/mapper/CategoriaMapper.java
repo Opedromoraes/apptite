@@ -2,7 +2,6 @@ package com.dev.apptite.domain.mapper;
 
 import com.dev.apptite.api.controller.categoria.request.CategoriaRequest;
 import com.dev.apptite.api.controller.categoria.response.CategoriaResponse;
-import com.dev.apptite.api.controller.restaurante.request.RestauranteUpdateRequest;
 import com.dev.apptite.domain.dto.CategoriaDTO;
 import com.dev.apptite.domain.entity.Categoria;
 import org.mapstruct.Mapper;
@@ -19,9 +18,6 @@ public interface CategoriaMapper {
     CategoriaResponse dtoToResponse(CategoriaDTO dto);
 
     CategoriaDTO requestToDto(CategoriaRequest request);
-
-    CategoriaDTO requestUpdateToDto(RestauranteUpdateRequest request);
-
 
     List<CategoriaDTO> entityToDTO(List<Categoria> entity);
 

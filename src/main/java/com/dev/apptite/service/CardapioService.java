@@ -4,15 +4,15 @@ import com.dev.apptite.domain.dto.CardapioDTO;
 import com.dev.apptite.domain.dto.CategoriaDTO;
 import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.entity.Cardapio;
-import com.dev.apptite.domain.exceptions.BusinessException;
 import com.dev.apptite.domain.exceptions.NotFoundException;
 import com.dev.apptite.domain.mapper.CardapioMapper;
 import com.dev.apptite.repository.CardapioRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -25,20 +25,23 @@ public class CardapioService {
 
     public CardapioDTO salvar(CardapioDTO cardapioDTO) {
 
-        validacaoCardapio(cardapioDTO);
+        associarCategorias(cardapioDTO);
+        associarRestaurante(cardapioDTO);
 
-        if (cardapioDTO.getCategoriasId() != null) {
-            List<CategoriaDTO> categoriasDTO = categoriaService.findAllByIds(cardapioDTO.getCategoriasId());
-            categoriasDTO.forEach(categoriaDTO -> categoriaDTO.setIdCardapio(cardapioDTO.getIdCardapio()));
-            cardapioDTO.setCategorias(categoriasDTO);
-        }
+        Cardapio cardapio = mapper.dtoToEntity(cardapioDTO);
 
-        RestauranteDTO restauranteDTO = restauranteService.findById(cardapioDTO.getIdRestaurante());
-        cardapioDTO.setRestaurante(restauranteDTO);
+        Cardapio save = repository.save(cardapio);
+        return mapper.entityToDTO(save);
+    }
 
-        Cardapio cardapio = repository.save(mapper.dtoToEntity(cardapioDTO));
+    public CardapioDTO update(CardapioDTO cardapioNovoDTO, Long id) {
 
-        return mapper.entityToDTO(cardapio);
+        CardapioDTO cardapioDTO = findById(id);
+        BeanUtils.copyProperties(cardapioNovoDTO, cardapioDTO, "idCardapio");
+        associarCategorias(cardapioDTO);
+        Cardapio cardapio = mapper.dtoToEntity(cardapioDTO);
+
+        return mapper.entityToDTO(repository.save(cardapio));
     }
 
     public CardapioDTO findById(Long id) {
@@ -51,23 +54,42 @@ public class CardapioService {
         repository.deleteById(id);
     }
 
-
-    private void validacaoCardapio(CardapioDTO cardapioDTO) {
-        Optional<Cardapio> cardapioOptional = repository.findByNome(cardapioDTO.getNome());
-        cardapioOptional.ifPresent(cardapio -> {
-            throw new BusinessException("duplicate.menu.error");
-        });
-    }
-
     public CardapioDTO adicionarOuRemoverCategoria(Long id, Long idCategoria, Boolean isAdd) {
 
         CardapioDTO cardapioDTO = findById(id);
         CategoriaDTO categoriaDTO = categoriaService.findById(idCategoria);
-        if (isAdd) {
-            cardapioDTO.getCategoriasId().add(categoriaDTO.getIdCategoria());
-        } else {
-            cardapioDTO.getCategoriasId().remove(categoriaDTO.getIdCategoria());
+
+        if (cardapioDTO.getIdsCategoria() == null) {
+            cardapioDTO.setIdsCategoria(new ArrayList<>());
         }
+
+        addOrRemoveCategoria(cardapioDTO, categoriaDTO, isAdd);
+
         return salvar(cardapioDTO);
     }
+
+    private void addOrRemoveCategoria(CardapioDTO cardapioDTO, CategoriaDTO categoriaDTO, Boolean isAdd) {
+        if (Boolean.TRUE.equals(isAdd)) {
+            cardapioDTO.getIdsCategoria().add(categoriaDTO.getIdCategoria());
+        } else {
+            cardapioDTO.getIdsCategoria().remove(categoriaDTO.getIdCategoria());
+        }
+    }
+
+    private void associarCategorias(CardapioDTO cardapioDTO) {
+        if (cardapioDTO.getIdsCategoria() != null) {
+            cardapioDTO.getIdsCategoria()
+                    .forEach(idCategoria ->
+                            cardapioDTO.getCategorias().add(categoriaService.findById(idCategoria)));
+        }
+    }
+
+    private void associarRestaurante(CardapioDTO cardapioDTO) {
+        if (cardapioDTO.getIdRestaurante() != null) {
+            RestauranteDTO restauranteDTO = restauranteService.findById(cardapioDTO.getIdRestaurante());
+            cardapioDTO.setRestaurante(restauranteDTO);
+            cardapioDTO.setIdRestaurante(restauranteDTO.getIdRestaurante());
+        }
+    }
+
 }

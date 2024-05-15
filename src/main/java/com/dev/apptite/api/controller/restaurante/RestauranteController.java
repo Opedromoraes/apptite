@@ -34,7 +34,7 @@ public class RestauranteController implements IRestauranteController {
 
     @Override
     public ResponseEntity<RestauranteResponse> update(RestauranteUpdateRequest request, Long id) {
-        RestauranteDTO response = service.update(request, id);
+        RestauranteDTO response = service.update(mapper.requestUpdateToDto(request), id);
         return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(response));
     }
 

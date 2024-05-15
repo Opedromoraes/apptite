@@ -12,7 +12,7 @@ public class CardapioDTO {
     Long idCardapio;
     String nome;
     List<CategoriaDTO> categorias;
-    List<Long> categoriasId;
+    List<Long> idsCategoria;
     Long idRestaurante;
     RestauranteDTO restaurante;
 }

@@ -10,13 +10,16 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
-public class CardapioDuplicadoRequest {
+public class CardapioUpdateRequest {
 
     @Schema(description = "Nome do cardapio", example = "Cardapio")
     @NotNull
     private String nome;
 
-    @Schema(description = "Categorias", example = "1,2,3")
-    private List<Long> categoriasId;
+    @Schema(description = "Categorias", example = "[1,2,3]")
+    private List<Long> idsCategoria;
 
+    @Schema(description = "ID do restaurante", example = "1")
+    @NotNull
+    private Long idRestaurante;
 }

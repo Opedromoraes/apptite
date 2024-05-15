@@ -1,5 +1,6 @@
 package com.dev.apptite.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -25,6 +26,8 @@ public class Categoria {
     private Restaurante restaurante;
 
     @ManyToOne
-    @JoinColumn(name = "cardapio_id")
+    @JoinColumn(name = "id_cardapio")
+    @JsonIgnore
     private Cardapio cardapio;
+
 }

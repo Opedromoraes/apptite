@@ -2,17 +2,16 @@ package com.dev.apptite.api.controller.categoria.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
 public class CategoriaRequest {
+
+    @Schema(description = "Id do restaurante", example = "1")
+    private String id;
 
     @Schema(description = "Nome da categoria", example = "Comidas")
     @NotNull

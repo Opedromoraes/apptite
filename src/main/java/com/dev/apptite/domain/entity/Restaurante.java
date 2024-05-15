@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-import java.util.List;
-
 
 @Entity
 @Table(name = "restaurante")
@@ -27,6 +25,4 @@ public class Restaurante {
     @Column(name = "endereco", nullable = false)
     String endereco;
 
-    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Categoria> categorias;
 }

@@ -6,16 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
     @Query("SELECT c FROM Categoria c WHERE c.restaurante.idRestaurante = :idRestaurante")
-    List<Categoria> findCategoriasByIdRestaurante(@Param("idRestaurante") Long idRestaurante);
-
-    @Query("SELECT c FROM Categoria c WHERE c.nome = :nome")
-    Optional<Categoria> findByNome(@Param("nome") String nome);
-
-    @Query("SELECT c FROM Categoria c WHERE c.id IN :ids")
-    List<Categoria> findByIds(@Param("ids") List<Long> ids);
+    List<Categoria> findByIdRestaurante(@Param("idRestaurante") Long idRestaurante);
 }
