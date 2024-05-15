@@ -1,7 +1,5 @@
 package com.dev.apptite.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -31,7 +29,7 @@ public class Cardapio {
             CascadeType.PERSIST,
             CascadeType.MERGE,
             CascadeType.REMOVE
-    })
+    }, orphanRemoval = true)
     @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "id_cardapio")
     List<Categoria> categorias;

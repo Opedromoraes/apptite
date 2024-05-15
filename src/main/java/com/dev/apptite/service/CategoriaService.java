@@ -51,6 +51,11 @@ public class CategoriaService {
         return mapper.entityToDTO(categoria);
     }
 
+    public Categoria findByIdEntity(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Categoria não encontrada"));
+    }
+
     public void delete(Long id) {
         if (!repository.existsById(id)) {
             throw new BusinessException("Não é possível deletar. Categoria não encontrada para o ID: " + id);

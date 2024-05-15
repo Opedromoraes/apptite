@@ -27,6 +27,7 @@ public class Categoria {
 
     @ManyToOne
     @JoinColumn(name = "id_cardapio", insertable = false, updatable = false)
+    @JsonIgnore
     private Cardapio cardapio;
 
 }

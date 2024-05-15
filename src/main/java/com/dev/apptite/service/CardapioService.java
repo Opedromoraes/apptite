@@ -4,6 +4,7 @@ import com.dev.apptite.domain.dto.CardapioDTO;
 import com.dev.apptite.domain.dto.CategoriaDTO;
 import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.entity.Cardapio;
+import com.dev.apptite.domain.entity.Categoria;
 import com.dev.apptite.domain.exceptions.NotFoundException;
 import com.dev.apptite.domain.mapper.CardapioMapper;
 import com.dev.apptite.repository.CardapioRepository;
@@ -25,11 +26,12 @@ public class CardapioService {
 
     public CardapioDTO salvar(CardapioDTO cardapioDTO) {
 
-        associarCategorias(cardapioDTO);
+        List<Categoria> categorias = associarCategorias(cardapioDTO);
         associarRestaurante(cardapioDTO);
 
         Cardapio cardapio = mapper.dtoToEntity(cardapioDTO);
 
+        cardapio.setCategorias(categorias);
         Cardapio save = repository.save(cardapio);
         return mapper.entityToDTO(save);
     }
@@ -59,10 +61,6 @@ public class CardapioService {
         CardapioDTO cardapioDTO = findById(id);
         CategoriaDTO categoriaDTO = categoriaService.findById(idCategoria);
 
-        if (cardapioDTO.getIdsCategoria() == null) {
-            cardapioDTO.setIdsCategoria(new ArrayList<>());
-        }
-
         addOrRemoveCategoria(cardapioDTO, categoriaDTO, isAdd);
 
         return salvar(cardapioDTO);
@@ -76,16 +74,18 @@ public class CardapioService {
         }
     }
 
-    private void associarCategorias(CardapioDTO cardapioDTO) {
+    private List<Categoria> associarCategorias(CardapioDTO cardapioDTO) {
+
+        List<Categoria> categorias = new ArrayList<>();
+
         if (cardapioDTO.getIdsCategoria() != null) {
             cardapioDTO.getIdsCategoria()
                     .forEach(idCategoria -> {
-                        List<CategoriaDTO> categorias = new ArrayList<>();
-                        CategoriaDTO categoriaDTO = categoriaService.findById(idCategoria);
-                        categorias.add(categoriaDTO);
-                        cardapioDTO.setCategorias(categorias);
+                        Categoria categoria = categoriaService.findByIdEntity(idCategoria);
+                        categorias.add(categoria);
                     });
         }
+        return categorias;
     }
 
     private void associarRestaurante(CardapioDTO cardapioDTO) {
