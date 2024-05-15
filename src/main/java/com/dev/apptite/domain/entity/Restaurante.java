@@ -3,6 +3,7 @@ package com.dev.apptite.domain.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import lombok.experimental.FieldNameConstants;
 
 
 @Entity
@@ -11,6 +12,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldNameConstants
 public class Restaurante {
 
     @Id

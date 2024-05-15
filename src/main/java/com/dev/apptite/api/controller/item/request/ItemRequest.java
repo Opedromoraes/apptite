@@ -1,4 +1,4 @@
-package com.dev.apptite.api.controller.categoria.request;
+package com.dev.apptite.api.controller.item.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
@@ -8,13 +8,13 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
-public class CategoriaRequest {
+public class ItemRequest {
 
-    @Schema(description = "Nome da categoria", example = "Comidas")
+    @Schema(description = "Nome do item", example = "Coca-cola")
     @NotNull
     private String nome;
 
-    @Schema(description = "Identificador do restaurante", example = "1")
+    @Schema(description = "Identificador da categoria", example = "1")
     @NotNull
-    private Long idRestaurante;
+    private Long idCategoria;
 }

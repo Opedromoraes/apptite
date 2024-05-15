@@ -5,7 +5,7 @@ import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.entity.Categoria;
 import com.dev.apptite.domain.exceptions.NotFoundException;
 import com.dev.apptite.domain.mapper.CategoriaMapper;
-import com.dev.apptite.repository.CategoriaRepository;
+import com.dev.apptite.repository.impl.ICategoriaRepository;
 import com.dev.apptite.domain.exceptions.BusinessException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -18,7 +18,7 @@ import java.util.List;
 public class CategoriaService {
 
     private final CategoriaMapper mapper;
-    private final CategoriaRepository repository;
+    private final ICategoriaRepository repository;
     private final RestauranteService restauranteService;
 
     public CategoriaDTO salvar(CategoriaDTO categoriaDTO) {

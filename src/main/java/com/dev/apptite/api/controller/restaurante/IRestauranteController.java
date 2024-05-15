@@ -1,15 +1,19 @@
 package com.dev.apptite.api.controller.restaurante;
 
+import com.dev.apptite.api.controller.restaurante.request.RestauranteFilterRequest;
 import com.dev.apptite.api.controller.restaurante.request.RestauranteRequest;
 import com.dev.apptite.api.controller.restaurante.request.RestauranteUpdateRequest;
 import com.dev.apptite.api.controller.restaurante.response.RestauranteResponse;
 import com.dev.apptite.domain.exceptions.dto.ErrorDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springdoc.core.converters.models.Pageable;
+import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -44,29 +48,6 @@ public interface IRestauranteController {
     @PostMapping
     @ResponseStatus(CREATED)
     ResponseEntity<RestauranteResponse> create(@Valid @RequestBody RestauranteRequest restauranteRequest);
-
-    @Operation(
-            summary = "Buscar Restaurante",
-            description = "Endpoint responsável por buscar um restaurante",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Restaurante encontrado com sucesso.",
-                            content = @Content(schema = @Schema(implementation = RestauranteResponse.class))),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Cliente não encontrado.",
-                            content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Ocorreu um erro inesperado.",
-                            content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
-            })
-    @GetMapping
-    @ResponseStatus(OK)
-    ResponseEntity<List<RestauranteResponse>> findAll();
-
-
 
     @Operation(
             summary = "Atualizar Restaurante",
@@ -134,5 +115,27 @@ public interface IRestauranteController {
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(NO_CONTENT)
     ResponseEntity<Void> delete(@PathVariable Long id);
+
+    @Operation(
+            summary = "Consultar restaurante paginado",
+            description = "Endpoint responsável por buscar um restaurante paginado",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Restaurante encontrado com sucesso.",
+                            content = @Content(schema = @Schema(implementation = RestauranteResponse.class))),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Restaurante não encontrado.",
+                            content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Ocorreu um erro inesperado.",
+                            content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
+            })
+    @GetMapping
+    @ResponseStatus(OK)
+    @PageableAsQueryParam
+    ResponseEntity<List<RestauranteResponse>> findAllPaginated(Pageable page, @RequestBody RestauranteFilterRequest request);
 
 }

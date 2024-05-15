@@ -7,7 +7,7 @@ import com.dev.apptite.domain.entity.Cardapio;
 import com.dev.apptite.domain.entity.Categoria;
 import com.dev.apptite.domain.exceptions.NotFoundException;
 import com.dev.apptite.domain.mapper.CardapioMapper;
-import com.dev.apptite.repository.CardapioRepository;
+import com.dev.apptite.repository.impl.ICardapioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import java.util.List;
 public class CardapioService {
 
     private final CardapioMapper mapper;
-    private final CardapioRepository repository;
+    private final ICardapioRepository repository;
     private final RestauranteService restauranteService;
     private final CategoriaService categoriaService;
 

@@ -1,7 +1,9 @@
-package com.dev.apptite.api.controller.categoria;
+package com.dev.apptite.api.controller.item;
 
 import com.dev.apptite.api.controller.categoria.request.CategoriaRequest;
 import com.dev.apptite.api.controller.categoria.response.CategoriaResponse;
+import com.dev.apptite.api.controller.item.request.ItemRequest;
+import com.dev.apptite.api.controller.item.response.ItemResponse;
 import com.dev.apptite.domain.exceptions.dto.ErrorDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,18 +20,18 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
-@Tag(name = "Categorias")
-@RequestMapping(value = "/categorias")
+@Tag(name = "Itens")
+@RequestMapping(value = "/itens")
 @Validated
-public interface ICategoriaController {
+public interface IItemController {
 
     @Operation(
-            summary = "Criar Categoria",
-            description = "Endpoint responsável por criar uma nova categoria",
+            summary = "Criar Item",
+            description = "Endpoint responsável por criar um novo item",
             responses = {
                     @ApiResponse(
                             responseCode = "201",
-                            description = "Categoria criada com sucesso.",
+                            description = "Item criado com sucesso.",
                             content = @Content(schema = @Schema(implementation = CategoriaResponse.class))),
                     @ApiResponse(
                             responseCode = "422",
@@ -42,19 +44,19 @@ public interface ICategoriaController {
             })
     @PostMapping
     @ResponseStatus(CREATED)
-    ResponseEntity<CategoriaResponse> create(@Valid @RequestBody CategoriaRequest categoriaRequest);
+    ResponseEntity<ItemResponse> create(@Valid @RequestBody ItemRequest itemRequest);
 
     @Operation(
-            summary = "Buscar Categoria",
-            description = "Endpoint responsável por buscar uma categoria",
+            summary = "Buscar Item",
+            description = "Endpoint responsável por buscar um item",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Categoria encontrada com sucesso.",
+                            description = "Item encontrado com sucesso.",
                             content = @Content(schema = @Schema(implementation = CategoriaResponse.class))),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Categoria não encontrada.",
+                            description = "Item não encontrado.",
                             content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
                     @ApiResponse(
                             responseCode = "500",
@@ -63,19 +65,19 @@ public interface ICategoriaController {
             })
     @GetMapping
     @ResponseStatus(OK)
-    ResponseEntity<List<CategoriaResponse>> findAll();
+    ResponseEntity<List<ItemResponse>> findAll();
 
     @Operation(
-            summary = "Buscar categoria por id",
-            description = "Endpoint responsável por buscar uma categoria",
+            summary = "Buscar item por id",
+            description = "Endpoint responsável por buscar um item",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Categoria encontrada com sucesso.",
+                            description = "Item encontrado com sucesso.",
                             content = @Content(schema = @Schema(implementation = CategoriaResponse.class))),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Categoria não encontrada.",
+                            description = "Item não encontrado.",
                             content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
                     @ApiResponse(
                             responseCode = "500",
@@ -84,40 +86,40 @@ public interface ICategoriaController {
             })
     @GetMapping("{id}")
     @ResponseStatus(OK)
-    ResponseEntity<CategoriaResponse> findById(@PathVariable Long id);
+    ResponseEntity<ItemResponse> findById(@PathVariable Long id);
+
+//    @Operation(
+//            summary = "Buscar categoria por id do Restaurante",
+//            description = "Endpoint responsável por buscar categorias de um Restaurante",
+//            responses = {
+//                    @ApiResponse(
+//                            responseCode = "200",
+//                            description = "Categoria encontrado com sucesso.",
+//                            content = @Content(schema = @Schema(implementation = CategoriaResponse.class))),
+//                    @ApiResponse(
+//                            responseCode = "404",
+//                            description = "Categoria não encontrado.",
+//                            content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
+//                    @ApiResponse(
+//                            responseCode = "500",
+//                            description = "Ocorreu um erro inesperado.",
+//                            content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
+//            })
+//    @GetMapping("restaurante/{idRestaurante}")
+//    @ResponseStatus(OK)
+//    ResponseEntity<List<CategoriaResponse>> findByIdRestaurante(@PathVariable Long idRestaurante);
 
     @Operation(
-            summary = "Buscar categoria por id do Restaurante",
-            description = "Endpoint responsável por buscar categorias de um Restaurante",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Categoria encontrado com sucesso.",
-                            content = @Content(schema = @Schema(implementation = CategoriaResponse.class))),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Categoria não encontrada.",
-                            content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Ocorreu um erro inesperado.",
-                            content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
-            })
-    @GetMapping("restaurante/{idRestaurante}")
-    @ResponseStatus(OK)
-    ResponseEntity<List<CategoriaResponse>> findByIdRestaurante(@PathVariable Long idRestaurante);
-
-    @Operation(
-            summary = "Deletar Categoria",
-            description = "Endpoint responsável por deletar uma categoria",
+            summary = "Deletar Item",
+            description = "Endpoint responsável por deletar um item",
             responses = {
                     @ApiResponse(
                             responseCode = "204",
-                            description = "Categoria deletada com sucesso."
+                            description = "Item deletado com sucesso."
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Categoria não encontrada.",
+                            description = "Item não encontrado.",
                             content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
                     @ApiResponse(
                             responseCode = "500",

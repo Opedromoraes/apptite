@@ -1,5 +1,6 @@
 package com.dev.apptite.api.controller.restaurante;
 
+import com.dev.apptite.api.controller.restaurante.request.RestauranteFilterRequest;
 import com.dev.apptite.api.controller.restaurante.request.RestauranteRequest;
 import com.dev.apptite.api.controller.restaurante.request.RestauranteUpdateRequest;
 import com.dev.apptite.api.controller.restaurante.response.RestauranteResponse;
@@ -7,6 +8,7 @@ import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.mapper.RestauranteMapper;
 import com.dev.apptite.service.RestauranteService;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.converters.models.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,11 +28,6 @@ public class RestauranteController implements IRestauranteController {
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.dtoToResponse(response));
     }
 
-    @Override
-    public ResponseEntity<List<RestauranteResponse>> findAll() {
-        List<RestauranteDTO> response = service.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(response));
-    }
 
     @Override
     public ResponseEntity<RestauranteResponse> update(RestauranteUpdateRequest request, Long id) {
@@ -49,5 +46,12 @@ public class RestauranteController implements IRestauranteController {
     public ResponseEntity<Void> delete(Long id) {
         service.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @Override
+    public ResponseEntity<List<RestauranteResponse>> findAllPaginated(Pageable page, RestauranteFilterRequest request) {
+        service.findPaginated(page,request);
+
+        return null;
     }
 }
