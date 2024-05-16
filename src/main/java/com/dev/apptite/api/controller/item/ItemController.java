@@ -34,14 +34,6 @@ public class ItemController implements IItemController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-//    @Override
-//    public ResponseEntity<CategoriaResponse> create(CategoriaRequest request) {
-//        CategoriaDTO categoriaDTO = service.salvar(mapper.requestToDto(request));
-//        CategoriaResponse response = mapper.dtoToResponse(categoriaDTO);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-//    }
-
-
     @Override
     public ResponseEntity<List<ItemResponse>> findAll() {
         List<ItemDTO> itemDTO = service.findAll();
@@ -50,28 +42,17 @@ public class ItemController implements IItemController {
 
     }
 
-//    @Override
-//    public ResponseEntity<List<CategoriaResponse>> findAll() {
-//        List<CategoriaDTO> categoriasDTO = service.findAll();
-//        List<CategoriaResponse> response = mapper.dtoToResponse(categoriasDTO);
-//        return ResponseEntity.status(HttpStatus.OK).body(response);
-//    }
-
     @Override
     public ResponseEntity<ItemResponse> findById(Long id) {
-        return null;
+        ItemDTO itemDTO = service.findById(id);
+        ItemResponse response = mapper.dtoToResponse(itemDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
-//    @Override
-//    public ResponseEntity<CategoriaResponse> findById(Long id) {
-//        CategoriaDTO categoriaDTO = service.findById(id);
-//        CategoriaResponse response = mapper.dtoToResponse(categoriaDTO);
-//        return ResponseEntity.status(HttpStatus.OK).body(response);
-//    }
 
     @Override
     public ResponseEntity<Void> delete(Long id) {
-        return null;
+        service.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 //    @Override
