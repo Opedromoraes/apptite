@@ -4,9 +4,11 @@ import com.dev.apptite.api.controller.restaurante.request.RestauranteFilterReque
 import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.entity.Restaurante;
 import com.dev.apptite.domain.mapper.RestauranteMapper;
+import com.dev.apptite.repository.RestauranteRepository;
 import com.dev.apptite.repository.impl.IRestauranteRepository;
 import lombok.AllArgsConstructor;
-import org.springdoc.core.converters.models.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.BeanUtils;
 
@@ -17,15 +19,16 @@ import java.util.List;
 public class RestauranteService {
 
     private final RestauranteMapper mapper;
-    private final IRestauranteRepository repository;
+    private final IRestauranteRepository repositoryImpl;
+    private final RestauranteRepository repository;
 
     public RestauranteDTO salvar(RestauranteDTO restauranteDTO) {
         Restaurante restaurante = mapper.dtoToEntity(restauranteDTO);
-        return mapper.entityToDTO(repository.save(restaurante));
+        return mapper.entityToDTO(repositoryImpl.save(restaurante));
     }
 
     public List<RestauranteDTO> findAll() {
-        List<Restaurante> restaurantes = repository.findAll();
+        List<Restaurante> restaurantes = repositoryImpl.findAll();
         return mapper.entityToDTO(restaurantes);
     }
 
@@ -35,18 +38,20 @@ public class RestauranteService {
         BeanUtils.copyProperties(restauranteNovoDTO, restauranteDTO, "idRestaurante");
 
         Restaurante restaurante = mapper.dtoToEntity(restauranteDTO);
-        return mapper.entityToDTO(repository.save(restaurante));
+        return mapper.entityToDTO(repositoryImpl.save(restaurante));
     }
 
     public RestauranteDTO findById(Long id) {
-        Restaurante restaurante = repository.findById(id).orElseThrow();
+        Restaurante restaurante = repositoryImpl.findById(id).orElseThrow();
         return mapper.entityToDTO(restaurante);
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        repositoryImpl.deleteById(id);
     }
 
-    public void findPaginated(Pageable page, RestauranteFilterRequest request) {
+    public Page<RestauranteDTO> findPaginated(Pageable page, RestauranteFilterRequest request) {
+        Page<Restaurante> restaurantePage = repository.findPaginated(page, request);
+        return mapper.entityToDTO(restaurantePage);
     }
 }

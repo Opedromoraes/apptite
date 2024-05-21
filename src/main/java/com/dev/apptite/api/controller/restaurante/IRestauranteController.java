@@ -6,19 +6,17 @@ import com.dev.apptite.api.controller.restaurante.request.RestauranteUpdateReque
 import com.dev.apptite.api.controller.restaurante.response.RestauranteResponse;
 import com.dev.apptite.domain.exceptions.dto.ErrorDTO;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springdoc.core.converters.models.Pageable;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -136,6 +134,6 @@ public interface IRestauranteController {
     @GetMapping
     @ResponseStatus(OK)
     @PageableAsQueryParam
-    ResponseEntity<List<RestauranteResponse>> findAllPaginated(Pageable page, @RequestBody RestauranteFilterRequest request);
+    ResponseEntity<Page<RestauranteResponse>> findAllPaginated(Pageable pageable, @RequestBody RestauranteFilterRequest request);
 
 }

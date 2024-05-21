@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://db:5432/apptite_db
+    url: jdbc:postgresql://localhost:5432/apptite_db
     username: user
     password: password
     driver-class-name: org.postgresql.Driver
@@ -26,3 +26,5 @@ logging:
     org:
       springframework:
         web: DEBUG
+server:
+  port: 8081
