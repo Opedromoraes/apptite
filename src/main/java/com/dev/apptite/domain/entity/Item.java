@@ -24,7 +24,7 @@ public class Item {
     String nome;
 
     @NotBlank(message = "O preço é obrigatório")
-    @Column(name = "nome", nullable = false)
+    @Column(name = "pre\u00E7o", nullable = false)
     private Double preco;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
