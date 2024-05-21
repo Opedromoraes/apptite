@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import java.util.List;
 
 
 @Entity
@@ -21,10 +25,12 @@ public class Restaurante {
 
     @NotBlank(message = "O nome é obrigatório")
     @Column(name = "nome", nullable = false)
-    String nome;
+    private String nome;
 
     @NotBlank(message = "O endereço é obrigatório")
     @Column(name = "endereco", nullable = false)
-    String endereco;
+    private String endereco;
 
+    @OneToOne(mappedBy = "restaurante", cascade = CascadeType.ALL)
+    private Cardapio cardapio;
 }

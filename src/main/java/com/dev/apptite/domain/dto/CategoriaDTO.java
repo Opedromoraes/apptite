@@ -13,5 +13,5 @@ public class CategoriaDTO {
     private Long idRestaurante;
     private RestauranteDTO restaurante;
     private Long idCardapio;
-
+    private CardapioDTO cardapio;
 }

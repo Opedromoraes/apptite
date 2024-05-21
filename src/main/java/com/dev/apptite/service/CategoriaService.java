@@ -1,5 +1,6 @@
 package com.dev.apptite.service;
 
+import com.dev.apptite.domain.dto.CardapioDTO;
 import com.dev.apptite.domain.dto.CategoriaDTO;
 import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.entity.Categoria;
@@ -19,11 +20,11 @@ public class CategoriaService {
 
     private final CategoriaMapper mapper;
     private final ICategoriaRepository repository;
-    private final RestauranteService restauranteService;
+    private final CardapioService cardapioService;
 
     public CategoriaDTO salvar(CategoriaDTO categoriaDTO) {
 
-        associarRestaurante(categoriaDTO);
+        associarCardapio(categoriaDTO);
         Categoria categoria = mapper.dtoToEntity(categoriaDTO);
 
         return mapper.entityToDTO(repository.save(categoria));
@@ -68,10 +69,10 @@ public class CategoriaService {
         return mapper.entityToDTO(categorias);
     }
 
-    private void associarRestaurante(CategoriaDTO categoriaDTO) {
-        if (categoriaDTO.getIdRestaurante() != null) {
-            RestauranteDTO restauranteDTO = restauranteService.findById(categoriaDTO.getIdRestaurante());
-            categoriaDTO.setRestaurante(restauranteDTO);
+    private void associarCardapio(CategoriaDTO categoriaDTO) {
+        if (categoriaDTO.getIdCardapio() != null) {
+            CardapioDTO cardapioDTO = cardapioService.findById(categoriaDTO.getIdCardapio());
+            categoriaDTO.setCardapio(cardapioDTO);
         }
     }
 }

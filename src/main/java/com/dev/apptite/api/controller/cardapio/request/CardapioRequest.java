@@ -16,9 +16,6 @@ public class CardapioRequest {
     @NotNull
     private String nome;
 
-    @Schema(description = "Categorias", example = "[1]")
-    private List<Long> idsCategoria;
-
     @Schema(description = "ID do restaurante", example = "1")
     @NotNull
     private Long idRestaurante;

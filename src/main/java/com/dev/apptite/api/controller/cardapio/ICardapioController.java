@@ -87,25 +87,4 @@ public interface ICardapioController {
         @ResponseStatus(NO_CONTENT)
         ResponseEntity<Void> delete(@PathVariable Long id);
 
-        @Operation(
-                summary = "Adicionar ou Remover Categoria",
-                description = "Endpoint responsável por adicionar ou remover uma categoria",
-                responses = {
-                        @ApiResponse(
-                                responseCode = "201",
-                                description = "Categoria adicionada ou removida com sucesso.",
-                                content = @Content(schema = @Schema(implementation = RestauranteResponse.class))),
-                        @ApiResponse(
-                                responseCode = "422",
-                                description = "Requisição possui pelo menos um valor faltante ou inválido.",
-                                content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
-                        @ApiResponse(
-                                responseCode = "500",
-                                description = "Ocorreu um erro inesperado.",
-                                content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
-                })
-        @PostMapping("{id}/categoria/{idCategoria}")
-        @ResponseStatus(CREATED)
-        ResponseEntity<CardapioResponse> addOrRemoveCategory(@PathVariable Long id, @PathVariable Long idCategoria, @RequestParam Boolean isAdd);
-
 }

@@ -13,7 +13,7 @@ public class RestauranteDTO {
     private Long idRestaurante;
     private String nome;
     private String endereco;
-    private List<CardapioDTO> cardapios;
+    private CardapioDTO cardapio;
     private List<CategoriaDTO> categorias;
     private List<Long> idsCategoria;
     private List<Long> idsCardapio;

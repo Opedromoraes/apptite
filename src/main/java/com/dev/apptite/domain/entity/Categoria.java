@@ -24,12 +24,7 @@ public class Categoria {
     String nome;
 
     @ManyToOne
-    @JoinColumn(name = "restaurante_id")
-    private Restaurante restaurante;
-
-    @ManyToOne
     @JoinColumn(name = "id_cardapio", insertable = false, updatable = false)
-    @JsonIgnore
     private Cardapio cardapio;
 
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL,fetch = FetchType.LAZY)

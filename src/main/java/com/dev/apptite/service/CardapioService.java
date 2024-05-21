@@ -22,16 +22,13 @@ public class CardapioService {
     private final CardapioMapper mapper;
     private final ICardapioRepository repository;
     private final RestauranteService restauranteService;
-    private final CategoriaService categoriaService;
 
     public CardapioDTO salvar(CardapioDTO cardapioDTO) {
 
-        List<Categoria> categorias = associarCategorias(cardapioDTO);
         associarRestaurante(cardapioDTO);
 
         Cardapio cardapio = mapper.dtoToEntity(cardapioDTO);
 
-        cardapio.setCategorias(categorias);
         Cardapio save = repository.save(cardapio);
         return mapper.entityToDTO(save);
     }
@@ -40,7 +37,6 @@ public class CardapioService {
 
         CardapioDTO cardapioDTO = findById(id);
         BeanUtils.copyProperties(cardapioNovoDTO, cardapioDTO, "idCardapio");
-        associarCategorias(cardapioDTO);
         Cardapio cardapio = mapper.dtoToEntity(cardapioDTO);
 
         return mapper.entityToDTO(repository.save(cardapio));
@@ -54,38 +50,6 @@ public class CardapioService {
 
     public void delete(Long id) {
         repository.deleteById(id);
-    }
-
-    public CardapioDTO adicionarOuRemoverCategoria(Long id, Long idCategoria, Boolean isAdd) {
-
-        CardapioDTO cardapioDTO = findById(id);
-        CategoriaDTO categoriaDTO = categoriaService.findById(idCategoria);
-
-        addOrRemoveCategoria(cardapioDTO, categoriaDTO, isAdd);
-
-        return salvar(cardapioDTO);
-    }
-
-    private void addOrRemoveCategoria(CardapioDTO cardapioDTO, CategoriaDTO categoriaDTO, Boolean isAdd) {
-        if (Boolean.TRUE.equals(isAdd)) {
-            cardapioDTO.getIdsCategoria().add(categoriaDTO.getIdCategoria());
-        } else {
-            cardapioDTO.getIdsCategoria().remove(categoriaDTO.getIdCategoria());
-        }
-    }
-
-    private List<Categoria> associarCategorias(CardapioDTO cardapioDTO) {
-
-        List<Categoria> categorias = new ArrayList<>();
-
-        if (cardapioDTO.getIdsCategoria() != null) {
-            cardapioDTO.getIdsCategoria()
-                    .forEach(idCategoria -> {
-                        Categoria categoria = categoriaService.findByIdEntity(idCategoria);
-                        categorias.add(categoria);
-                    });
-        }
-        return categorias;
     }
 
     private void associarRestaurante(CardapioDTO cardapioDTO) {

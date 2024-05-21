@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface ICategoriaRepository extends JpaRepository<Categoria, Long> {
 
-    @Query("SELECT c FROM Categoria c WHERE c.restaurante.idRestaurante = :idRestaurante")
+    @Query("SELECT c FROM Categoria c WHERE c.cardapio.restaurante.idRestaurante = :idRestaurante")
     List<Categoria> findByIdRestaurante(@Param("idRestaurante") Long idRestaurante);
 }

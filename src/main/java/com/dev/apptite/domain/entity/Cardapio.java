@@ -23,18 +23,13 @@ public class Cardapio {
 
     @NotBlank(message = "O nome é obrigatório")
     @Column(name = "nome", nullable = false)
-    String nome;
+    private String nome;
 
-    @OneToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE,
-            CascadeType.REMOVE
-    }, orphanRemoval = true)
-    @Fetch(FetchMode.SELECT)
+    @OneToMany
     @JoinColumn(name = "id_cardapio")
-    List<Categoria> categorias;
+    private List<Categoria> categorias;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "restaurante_id")
     private Restaurante restaurante;
 }

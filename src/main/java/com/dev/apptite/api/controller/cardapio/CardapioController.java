@@ -37,11 +37,5 @@ public class CardapioController implements ICardapioController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @Override
-    public ResponseEntity<CardapioResponse> addOrRemoveCategory(Long id, Long idCategoria, Boolean isAdd) {
-        CardapioDTO cardapioDTO = service.adicionarOuRemoverCategoria(id, idCategoria, isAdd);
-        CardapioResponse response = mapper.dtoToResponse(cardapioDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
 
 }
