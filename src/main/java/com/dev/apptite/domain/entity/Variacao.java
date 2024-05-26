@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Entity
-@Table(name = "variacao")
 @Data
 @Builder
 @AllArgsConstructor
@@ -18,7 +17,7 @@ public class Variacao {
 
         @NotBlank(message = "O nome é obrigatório")
         @Column(name = "nome", nullable = false)
-        String nome;
+        private String nome;
 
         @ManyToOne
         @JoinColumn(name = "item_id", nullable = false)

@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Entity
-@Table(name = "mesa")
 @Data
 @Builder
 @AllArgsConstructor
@@ -18,7 +17,5 @@ public class Mesa {
 
     @NotBlank(message = "O número é obrigatório")
     @Column(name = "numero", nullable = false)
-    int numero;
-
-
+    private int numero;
 }

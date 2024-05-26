@@ -6,9 +6,7 @@ import lombok.*;
 
 import java.util.List;
 
-
 @Entity
-@Table(name = "item")
 @Data
 @Builder
 @AllArgsConstructor
@@ -21,20 +19,19 @@ public class Item {
 
     @NotBlank(message = "O nome é obrigatório")
     @Column(name = "nome", nullable = false)
-    String nome;
+    private String nome;
 
-    @NotBlank(message = "O preço é obrigatório")
-    @Column(name = "pre\u00E7o", nullable = false)
-    private Double preco;
+    @NotBlank(message = "A descrição é obrigatória")
+    @Column(name = "descricao", nullable = false)
+    private String descricao;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<Variacao> variacao;
-
-//    @ManyToOne
-//    @JoinColumn(name = "pedido_id",nullable = false)
-//    private Pedido pedido;
+    @Column(name = "preco", nullable = false)
+    private double preco;
 
     @ManyToOne
-    @JoinColumn(name = "pedido_id",nullable = false)
+    @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Variacao> variacoes;
 }

@@ -1,16 +1,9 @@
 package com.dev.apptite.api.controller.item;
 
-import com.dev.apptite.api.controller.categoria.ICategoriaController;
-import com.dev.apptite.api.controller.categoria.request.CategoriaRequest;
-import com.dev.apptite.api.controller.categoria.response.CategoriaResponse;
 import com.dev.apptite.api.controller.item.request.ItemRequest;
 import com.dev.apptite.api.controller.item.response.ItemResponse;
-import com.dev.apptite.domain.dto.CategoriaDTO;
 import com.dev.apptite.domain.dto.ItemDTO;
-import com.dev.apptite.domain.entity.Item;
-import com.dev.apptite.domain.mapper.CategoriaMapper;
 import com.dev.apptite.domain.mapper.ItemMapper;
-import com.dev.apptite.service.CategoriaService;
 import com.dev.apptite.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -55,10 +48,5 @@ public class ItemController implements IItemController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-//    @Override
-//    public ResponseEntity<Void> delete(Long id) {
-//        service.delete(id);
-//        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-//    }
 }
 

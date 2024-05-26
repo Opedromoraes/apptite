@@ -4,6 +4,8 @@ import com.dev.apptite.api.controller.restaurante.request.RestauranteFilterReque
 import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.entity.Restaurante;
 import com.dev.apptite.domain.mapper.RestauranteMapper;
+import com.dev.apptite.domain.utils.PageResponse;
+import com.dev.apptite.domain.utils.PageResponseMapper;
 import com.dev.apptite.repository.RestauranteRepository;
 import com.dev.apptite.repository.impl.IRestauranteRepository;
 import lombok.AllArgsConstructor;
@@ -21,6 +23,7 @@ public class RestauranteService {
     private final RestauranteMapper mapper;
     private final IRestauranteRepository repositoryImpl;
     private final RestauranteRepository repository;
+    private final PageResponseMapper pageResponseMapper;
 
     public RestauranteDTO salvar(RestauranteDTO restauranteDTO) {
         Restaurante restaurante = mapper.dtoToEntity(restauranteDTO);
@@ -50,8 +53,10 @@ public class RestauranteService {
         repositoryImpl.deleteById(id);
     }
 
-    public Page<RestauranteDTO> findPaginated(Pageable page, RestauranteFilterRequest request) {
-        Page<Restaurante> restaurantePage = repository.findPaginated(page, request);
-        return mapper.entityToDTO(restaurantePage);
+    public PageResponse<RestauranteDTO> findPaginated(Pageable pageable, RestauranteFilterRequest request) {
+
+        Page<Restaurante> restaurantePage = repository.findPaginated(pageable, request);
+        PageResponse<Restaurante> page = pageResponseMapper.pageToPageResponse(restaurantePage);
+        return mapper.mapPageEntityToPageDto(page);
     }
 }

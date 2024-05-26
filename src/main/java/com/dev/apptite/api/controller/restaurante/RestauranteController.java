@@ -6,10 +6,11 @@ import com.dev.apptite.api.controller.restaurante.request.RestauranteUpdateReque
 import com.dev.apptite.api.controller.restaurante.response.RestauranteResponse;
 import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.mapper.RestauranteMapper;
+import com.dev.apptite.domain.utils.PageResponse;
+import com.dev.apptite.domain.utils.PageResponseMapper;
 import com.dev.apptite.service.RestauranteService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ public class RestauranteController implements IRestauranteController {
 
     private final RestauranteMapper mapper;
     private final RestauranteService service;
+    private final PageResponseMapper pageResponseMapper;
 
     @Override
     public ResponseEntity<RestauranteResponse> create(RestauranteRequest restauranteRequest) {
@@ -48,8 +50,13 @@ public class RestauranteController implements IRestauranteController {
     }
 
     @Override
-    public ResponseEntity<Page<RestauranteResponse>> findAllPaginated(Pageable page, RestauranteFilterRequest request) {
-        Page<RestauranteDTO> paginated = service.findPaginated(page, request);
-        return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToPageResponse(paginated));
+    public ResponseEntity<PageResponse<RestauranteResponse>> findAllPaginated(int pageNumber, int pageSize, String nome, String endereco) {
+
+        RestauranteFilterRequest filter = RestauranteFilterRequest.builder().endereco(endereco).nome(nome).build();
+
+        PageResponse<RestauranteDTO> paginated = service.findPaginated(PageRequest.of(pageNumber, pageSize), filter);
+        PageResponse<RestauranteResponse> response = mapper.mapPageDtoToPageResponse(paginated);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

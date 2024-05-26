@@ -19,9 +19,6 @@ public class ItemService {
     private final IItemRepository repository;
 
     public ItemDTO salvar(ItemDTO itemDTO) {
-
-//        associarRestaurante(itemDTO);
-
         Item item = mapper.dtoToEntity(itemDTO);
         return mapper.entityToDTO(repository.save(item));
     }
@@ -32,9 +29,8 @@ public class ItemService {
     }
 
     public ItemDTO findById(Long id) {
-        Item Item = repository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Item não encontrada"));
-        return mapper.entityToDTO(Item);
+        Item item = repository.findById(id).orElseThrow(() -> new NotFoundException("item não encontrado"));
+        return mapper.entityToDTO(item);
     }
 
     public void delete(Long id) {
@@ -43,17 +39,5 @@ public class ItemService {
         }
         repository.deleteById(id);
     }
-
-
-
-//    public ItemDTO update(ItemDTO ItemNovaDTO, Long id) {
-//
-//        ItemDTO ItemDTO = findById(id);
-//
-//        BeanUtils.copyProperties(ItemNovaDTO, ItemDTO, "idItem");
-//        Item Item = repository.save(mapper.dtoToEntity(ItemDTO));
-//
-//        return mapper.entityToDTO(Item);
-//    }
 
 }

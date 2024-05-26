@@ -7,11 +7,14 @@ import org.springframework.stereotype.Component;
 public class PageResponseMapper {
 
     public <T> PageResponse<T> pageToPageResponse(Page<T> page) {
+
         PageResponse<T> pageResponse = new PageResponse<>();
+
         pageResponse.setPageNumber(page.getPageable().getPageNumber());
         pageResponse.setPageSize(page.getPageable().getPageSize());
         pageResponse.setTotalPages(page.getTotalPages());
         pageResponse.setContent(page.getContent());
+
         return pageResponse;
     }
 

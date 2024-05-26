@@ -16,8 +16,4 @@ public class CategoriaUpdateRequest {
     @Schema(description = "Nome da categoria", example = "Comidas")
     @NotNull
     private String nome;
-
-    @Schema(description = "Identificador do restaurante", example = "1")
-    @NotNull
-    private Long idRestaurante;
 }

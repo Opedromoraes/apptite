@@ -5,9 +5,8 @@ import com.dev.apptite.api.controller.restaurante.request.RestauranteUpdateReque
 import com.dev.apptite.api.controller.restaurante.response.RestauranteResponse;
 import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.entity.Restaurante;
+import com.dev.apptite.domain.utils.PageResponse;
 import org.mapstruct.Mapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 
@@ -23,13 +22,7 @@ public interface RestauranteMapper {
     List<RestauranteDTO> entityToDTO(List<Restaurante> entity);
     List<RestauranteResponse> dtoToResponse(List<RestauranteDTO> dto);
 
-    default Page<RestauranteDTO> entityToDTO(Page<Restaurante> entityPage) {
-        List<RestauranteDTO> dtoList = entityToDTO(entityPage.getContent());
-        return new PageImpl<>(dtoList, entityPage.getPageable(), entityPage.getTotalElements());
-    }
+    PageResponse<RestauranteDTO> mapPageEntityToPageDto(PageResponse<Restaurante> page);
+    PageResponse<RestauranteResponse> mapPageDtoToPageResponse(PageResponse<RestauranteDTO> page);
 
-    default Page<RestauranteResponse> dtoToPageResponse(Page<RestauranteDTO> dtoPage) {
-        List<RestauranteResponse> responseList = dtoToResponse(dtoPage.getContent());
-        return new PageImpl<>(responseList, dtoPage.getPageable(), dtoPage.getTotalElements());
-    }
 }

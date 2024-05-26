@@ -1,7 +1,6 @@
 package com.dev.apptite.api.controller.restaurante.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 

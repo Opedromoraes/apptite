@@ -4,14 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import java.util.List;
-
 
 @Entity
-@Table(name = "restaurante")
 @Data
 @Builder
 @AllArgsConstructor

@@ -10,8 +10,6 @@ public class CategoriaDTO {
 
     private Long idCategoria;
     private String nome;
-    private Long idRestaurante;
-    private RestauranteDTO restaurante;
     private Long idCardapio;
     private CardapioDTO cardapio;
 }

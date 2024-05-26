@@ -1,6 +1,5 @@
 package com.dev.apptite.api.controller.item;
 
-import com.dev.apptite.api.controller.categoria.request.CategoriaRequest;
 import com.dev.apptite.api.controller.categoria.response.CategoriaResponse;
 import com.dev.apptite.api.controller.item.request.ItemRequest;
 import com.dev.apptite.api.controller.item.response.ItemResponse;
@@ -87,27 +86,6 @@ public interface IItemController {
     @GetMapping("{id}")
     @ResponseStatus(OK)
     ResponseEntity<ItemResponse> findById(@PathVariable Long id);
-
-//    @Operation(
-//            summary = "Buscar categoria por id do Restaurante",
-//            description = "Endpoint responsável por buscar categorias de um Restaurante",
-//            responses = {
-//                    @ApiResponse(
-//                            responseCode = "200",
-//                            description = "Categoria encontrado com sucesso.",
-//                            content = @Content(schema = @Schema(implementation = CategoriaResponse.class))),
-//                    @ApiResponse(
-//                            responseCode = "404",
-//                            description = "Categoria não encontrado.",
-//                            content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
-//                    @ApiResponse(
-//                            responseCode = "500",
-//                            description = "Ocorreu um erro inesperado.",
-//                            content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
-//            })
-//    @GetMapping("restaurante/{idRestaurante}")
-//    @ResponseStatus(OK)
-//    ResponseEntity<List<CategoriaResponse>> findByIdRestaurante(@PathVariable Long idRestaurante);
 
     @Operation(
             summary = "Deletar Item",

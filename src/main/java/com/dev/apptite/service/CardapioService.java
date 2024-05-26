@@ -1,10 +1,8 @@
 package com.dev.apptite.service;
 
 import com.dev.apptite.domain.dto.CardapioDTO;
-import com.dev.apptite.domain.dto.CategoriaDTO;
 import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.entity.Cardapio;
-import com.dev.apptite.domain.entity.Categoria;
 import com.dev.apptite.domain.exceptions.NotFoundException;
 import com.dev.apptite.domain.mapper.CardapioMapper;
 import com.dev.apptite.repository.impl.ICardapioRepository;
@@ -12,7 +10,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

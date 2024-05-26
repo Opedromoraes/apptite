@@ -5,17 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemDTO {
 
-    Long idItem;
-    String nome;
-    Long idCategori;
-    CategoriaDTO categoria;
+    private Long idItem;
+    private String nome;
+    private Long idCategoria;
+    private CategoriaDTO categoria;
 
 }

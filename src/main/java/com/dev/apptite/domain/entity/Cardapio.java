@@ -3,14 +3,10 @@ package com.dev.apptite.domain.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
 
-
 @Entity
-@Table(name = "cardapio")
 @Data
 @Builder
 @AllArgsConstructor
@@ -25,8 +21,7 @@ public class Cardapio {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @OneToMany
-    @JoinColumn(name = "id_cardapio")
+    @OneToMany(mappedBy = "cardapio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Categoria> categorias;
 
     @OneToOne
