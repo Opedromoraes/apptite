@@ -2,8 +2,12 @@ package com.dev.apptite.domain.mapper;
 
 import com.dev.apptite.api.controller.categoria.request.CategoriaRequest;
 import com.dev.apptite.api.controller.categoria.response.CategoriaResponse;
+import com.dev.apptite.api.controller.restaurante.response.RestauranteResponse;
 import com.dev.apptite.domain.dto.CategoriaDTO;
+import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.entity.Categoria;
+import com.dev.apptite.domain.entity.Restaurante;
+import com.dev.apptite.domain.utils.PageResponse;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -22,4 +26,7 @@ public interface CategoriaMapper {
     List<CategoriaDTO> entityToDTO(List<Categoria> entity);
 
     List<CategoriaResponse> dtoToResponse(List<CategoriaDTO> dto);
+
+    PageResponse<CategoriaDTO> mapPageEntityToPageDto(PageResponse<Categoria> page);
+    PageResponse<CategoriaResponse> mapPageDtoToPageResponse(PageResponse<CategoriaDTO> page);
 }

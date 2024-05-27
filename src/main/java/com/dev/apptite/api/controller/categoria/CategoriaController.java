@@ -1,11 +1,17 @@
 package com.dev.apptite.api.controller.categoria;
 
+import com.dev.apptite.api.controller.categoria.request.CategoriaFilterRequest;
 import com.dev.apptite.api.controller.categoria.request.CategoriaRequest;
 import com.dev.apptite.api.controller.categoria.response.CategoriaResponse;
+import com.dev.apptite.api.controller.restaurante.request.RestauranteFilterRequest;
+import com.dev.apptite.api.controller.restaurante.response.RestauranteResponse;
 import com.dev.apptite.domain.dto.CategoriaDTO;
+import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.mapper.CategoriaMapper;
+import com.dev.apptite.domain.utils.PageResponse;
 import com.dev.apptite.service.CategoriaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,13 +33,6 @@ public class CategoriaController implements ICategoriaController {
     }
 
     @Override
-    public ResponseEntity<List<CategoriaResponse>> findAll() {
-        List<CategoriaDTO> categoriasDTO = service.findAll();
-        List<CategoriaResponse> response = mapper.dtoToResponse(categoriasDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
-    @Override
     public ResponseEntity<CategoriaResponse> findById(Long id) {
         CategoriaDTO categoriaDTO = service.findById(id);
         CategoriaResponse response = mapper.dtoToResponse(categoriaDTO);
@@ -51,5 +50,16 @@ public class CategoriaController implements ICategoriaController {
     public ResponseEntity<Void> delete(Long id) {
         service.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @Override
+    public ResponseEntity<PageResponse<CategoriaResponse>> findAllPaginated(int pageNumber, int pageSize, String nome) {
+
+        CategoriaFilterRequest filter = CategoriaFilterRequest.builder().nome(nome).build();
+
+        PageResponse<CategoriaDTO> paginated = service.findPaginated(PageRequest.of(pageNumber, pageSize), filter);
+        PageResponse<CategoriaResponse> response = mapper.mapPageDtoToPageResponse(paginated);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
