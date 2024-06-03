@@ -29,13 +29,14 @@ public class ItemService {
     }
 
     public ItemDTO findById(Long id) {
-        Item item = repository.findById(id).orElseThrow(() -> new NotFoundException("item não encontrado"));
+        Item item = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Item de id não encontrado: ", id));
         return mapper.entityToDTO(item);
     }
 
     public void delete(Long id) {
         if (!repository.existsById(id)) {
-            throw new BusinessException("Não é possível deletar. Item não encontrada para o ID: " + id);
+            throw new BusinessException("Não é possível deletar. Item de idnão encontrada para o ID: " + id);
         }
         repository.deleteById(id);
     }

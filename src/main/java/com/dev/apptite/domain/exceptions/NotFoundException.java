@@ -12,10 +12,6 @@ public class NotFoundException extends BaseException {
         super(message, HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()), args);
     }
 
-    public NotFoundException(String message, List<String> errors) {
-        super(message, HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()), errors);
-    }
-
     public NotFoundException(String message) {
         super(message, HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()));
     }

@@ -10,11 +10,15 @@ import java.util.List;
 @Getter
 public class BusinessException extends BaseException {
 
-    public BusinessException(String message, List<String> errors) {
-        super(message, HttpStatusCode.valueOf(HttpStatus.UNPROCESSABLE_ENTITY.value()), errors);
+    public BusinessException(String message, Object... args) {
+        super(message, HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()), args);
     }
 
     public BusinessException(String message) {
-        super(message, HttpStatusCode.valueOf(HttpStatus.UNPROCESSABLE_ENTITY.value()));
+        super(message, HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()));
+    }
+
+    public BusinessException(String message, Throwable e) {
+        super(message, HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()), e);
     }
 }

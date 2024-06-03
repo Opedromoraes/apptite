@@ -13,10 +13,10 @@ public class PedidoConsumer {
 
     private final PedidoService service;
 
-    @KafkaListener(topics = "pedido_status", groupId = "pedido_group")
-    public void consumir(PedidoDTO pedidoDTO, Acknowledgment ack) {
-
-        service.atualizarStatusPedido(pedidoDTO.getIdPedido(), pedidoDTO.getStatus());
-        ack.acknowledge();
-    }
+//    @KafkaListener(topics = "pedido_status", groupId = "pedido_group")
+//    public void consumir(PedidoDTO pedidoDTO, Acknowledgment ack) {
+//
+//        service.atualizarStatusPedido(pedidoDTO.getIdPedido(), pedidoDTO.getStatus());
+//        ack.acknowledge();
+//    }
 }
