@@ -1,7 +1,6 @@
 package com.dev.apptite.service;
 
 import com.dev.apptite.api.controller.categoria.request.CategoriaFilterRequest;
-import com.dev.apptite.domain.dto.CardapioDTO;
 import com.dev.apptite.domain.dto.CategoriaDTO;
 import com.dev.apptite.domain.entity.Categoria;
 import com.dev.apptite.domain.exceptions.NotFoundException;
@@ -9,8 +8,6 @@ import com.dev.apptite.domain.mapper.CategoriaMapper;
 import com.dev.apptite.domain.utils.PageResponse;
 import com.dev.apptite.domain.utils.PageResponseMapper;
 import com.dev.apptite.repository.CategoriaRepository;
-import com.dev.apptite.repository.impl.ICategoriaRepository;
-import com.dev.apptite.domain.exceptions.BusinessException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -24,54 +21,49 @@ import java.util.List;
 public class CategoriaService {
 
     private final CategoriaMapper mapper;
-    private final ICategoriaRepository iRepository;
     private final CategoriaRepository repository;
     private final PageResponseMapper pageResponseMapper;
 
     public CategoriaDTO salvar(CategoriaDTO categoriaDTO) {
-
         Categoria categoria = mapper.dtoToEntity(categoriaDTO);
-
-        return mapper.entityToDTO(iRepository.save(categoria));
+        return mapper.entityToDTO(repository.salvar(categoria));
     }
 
     public CategoriaDTO update(CategoriaDTO categoriaNovaDTO, Long id) {
 
         CategoriaDTO categoriaDTO = findById(id);
-
         BeanUtils.copyProperties(categoriaNovaDTO, categoriaDTO, "idCategoria");
-        Categoria categoria = iRepository.save(mapper.dtoToEntity(categoriaDTO));
+        Categoria categoria = repository.salvar(mapper.dtoToEntity(categoriaDTO));
 
         return mapper.entityToDTO(categoria);
     }
 
     public CategoriaDTO findById(Long id) {
-        Categoria categoria = iRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Categoria não encontrada"));
+        Categoria categoria = repository.findById(id, Categoria.class)
+                .orElseThrow(() -> new NotFoundException("Categoria de id <{}> não encontrada", id));
         return mapper.entityToDTO(categoria);
     }
 
     public Categoria findByIdEntity(Long id) {
-        return iRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Categoria não encontrada"));
+        return repository.findById(id, Categoria.class)
+                .orElseThrow(() -> new NotFoundException("Categoria de id  <{}> não encontrada ", id));
     }
 
     public void delete(Long id) {
-        if (!iRepository.existsById(id)) {
-            throw new BusinessException("Não é possível deletar. Categoria não encontrada para o ID: " + id);
+        if (!repository.existsById(id)) {
+            throw new NotFoundException("Não é possível deletar. Categoria de id <{}> não encontrada para o ID: ", id);
         }
-        iRepository.deleteById(id);
+        repository.deletarPorId(id);
     }
 
     public List<CategoriaDTO> findByIdRestaurante(Long idRestaurante) {
-        List<Categoria> categorias = iRepository.findByIdRestaurante(idRestaurante);
+        List<Categoria> categorias = repository.buscarPorIdRestaurante(idRestaurante);
         return mapper.entityToDTO(categorias);
     }
 
 
     public PageResponse<CategoriaDTO> findPaginated(PageRequest pageable, CategoriaFilterRequest request) {
-
-        Page<Categoria> categoriaPage = repository.findPaginated(pageable, request);
+        Page<Categoria> categoriaPage = repository.findPaginated(pageable, request, Categoria.class);
         PageResponse<Categoria> page = pageResponseMapper.pageToPageResponse(categoriaPage);
         return mapper.mapPageEntityToPageDto(page);
 

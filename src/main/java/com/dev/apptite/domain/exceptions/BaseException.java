@@ -22,4 +22,16 @@ public class BaseException extends RuntimeException {
         this.status = httpStatusCode;
         this.errors = null;
     }
+
+    public BaseException(String message, HttpStatusCode httpStatusCode, Throwable cause) {
+        super(message, cause);
+        this.status = httpStatusCode;
+        this.errors = null;
+    }
+
+    public BaseException(String message, HttpStatusCode httpStatusCode, Object[] args) {
+        super(String.format(message, args));
+        this.status = httpStatusCode;
+        this.errors = null;
+    }
 }

@@ -3,50 +3,45 @@ package com.dev.apptite.service;
 import com.dev.apptite.domain.dto.CardapioDTO;
 import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.entity.Cardapio;
-import com.dev.apptite.domain.exceptions.NotFoundException;
 import com.dev.apptite.domain.mapper.CardapioMapper;
-import com.dev.apptite.repository.impl.ICardapioRepository;
+import com.dev.apptite.repository.CardapioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class CardapioService {
 
     private final CardapioMapper mapper;
-    private final ICardapioRepository repository;
+    private final CardapioRepository repository;
     private final RestauranteService restauranteService;
 
     public CardapioDTO salvar(CardapioDTO cardapioDTO) {
 
         associarRestaurante(cardapioDTO);
-
         Cardapio cardapio = mapper.dtoToEntity(cardapioDTO);
+        Cardapio save = repository.salvar(cardapio);
 
-        Cardapio save = repository.save(cardapio);
         return mapper.entityToDTO(save);
     }
 
-    public CardapioDTO update(CardapioDTO cardapioNovoDTO, Long id) {
+    public CardapioDTO atualizar(CardapioDTO cardapioNovoDTO, Long id) {
 
-        CardapioDTO cardapioDTO = findById(id);
+        CardapioDTO cardapioDTO = buscarPorId(id);
         BeanUtils.copyProperties(cardapioNovoDTO, cardapioDTO, "idCardapio");
         Cardapio cardapio = mapper.dtoToEntity(cardapioDTO);
 
-        return mapper.entityToDTO(repository.save(cardapio));
+        return mapper.entityToDTO(repository.salvar(cardapio));
     }
 
-    public CardapioDTO findById(Long id) {
-        Cardapio cardapio = repository.findById(id)
-                .orElseThrow(() -> new NotFoundException("base.message.error", List.of("menu.not-found.error")));
+    public CardapioDTO buscarPorId(Long id) {
+        Cardapio cardapio = repository.buscarPorId(id);
         return mapper.entityToDTO(cardapio);
     }
 
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public void deletarPorId(Long id) {
+        repository.deletarPorId(id);
     }
 
     private void associarRestaurante(CardapioDTO cardapioDTO) {

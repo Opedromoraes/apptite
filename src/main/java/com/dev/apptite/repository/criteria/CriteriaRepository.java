@@ -1,8 +1,8 @@
-package com.dev.apptite.repository;
+package com.dev.apptite.repository.criteria;
 
 import com.dev.apptite.domain.enums.CriteriaTypeEnum;
+import com.dev.apptite.domain.exceptions.DataBaseException;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -14,13 +14,36 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public abstract class CriteriaRepository<T> {
 
-    @PersistenceContext
     protected EntityManager entityManager;
 
+    public Optional<T> findById(Object id, Class<T> entityClass) {
+        return Optional.of(entityManager.find(entityClass, id));
+    }
+
+    protected T save(T entity) {
+        if (entityManager.contains(entity)) {
+            return entityManager.merge(entity);
+        } else {
+            entityManager.persist(entity);
+            return entity;
+        }
+    }
+
+    public void deleteById(Object id, Class<T> entityClass) {
+        Optional<T> entity = findById(id, entityClass);
+        if (entity.isPresent()) {
+            entityManager.remove(entity.get());
+        } else {
+            throw new DataBaseException("Entity not found: " + id);
+        }
+    }
+
     public Page<T> findPaginated(Pageable pageable, Object filterRequest, Class<T> entityClass) {
+
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(entityClass);
         Root<T> root = criteriaQuery.from(entityClass);

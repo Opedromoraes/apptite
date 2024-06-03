@@ -11,9 +11,10 @@ import com.dev.apptite.domain.utils.PageResponseMapper;
 import com.dev.apptite.service.RestauranteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,27 +27,27 @@ public class RestauranteController implements IRestauranteController {
     @Override
     public ResponseEntity<RestauranteResponse> create(RestauranteRequest restauranteRequest) {
         RestauranteDTO response = service.salvar(mapper.requestToDto(restauranteRequest));
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.dtoToResponse(response));
+        return ResponseEntity.status(CREATED).body(mapper.dtoToResponse(response));
     }
 
 
     @Override
     public ResponseEntity<RestauranteResponse> update(RestauranteUpdateRequest request, Long id) {
         RestauranteDTO response = service.update(mapper.requestUpdateToDto(request), id);
-        return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(response));
+        return ResponseEntity.status(OK).body(mapper.dtoToResponse(response));
     }
 
     @Override
     public ResponseEntity<RestauranteResponse> findById(Long id) {
         RestauranteDTO response = service.findById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(mapper.dtoToResponse(response));
+        return ResponseEntity.status(OK).body(mapper.dtoToResponse(response));
 
     }
 
     @Override
     public ResponseEntity<Void> delete(Long id) {
         service.delete(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(NO_CONTENT).build();
     }
 
     @Override
@@ -57,6 +58,6 @@ public class RestauranteController implements IRestauranteController {
         PageResponse<RestauranteDTO> paginated = service.findPaginated(PageRequest.of(pageNumber, pageSize), filter);
         PageResponse<RestauranteResponse> response = mapper.mapPageDtoToPageResponse(paginated);
 
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(OK).body(response);
     }
 }

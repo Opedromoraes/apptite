@@ -6,9 +6,10 @@ import com.dev.apptite.domain.dto.CardapioDTO;
 import com.dev.apptite.domain.mapper.CardapioMapper;
 import com.dev.apptite.service.CardapioService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,21 +22,19 @@ public class CardapioController implements ICardapioController {
     public ResponseEntity<CardapioResponse> create(CardapioRequest request) {
         CardapioDTO cardapioDTO = service.salvar(mapper.requestToDto(request));
         CardapioResponse response = mapper.dtoToResponse(cardapioDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(CREATED).body(response);
     }
 
     @Override
     public ResponseEntity<CardapioResponse> findById(Long id) {
-        CardapioDTO cardapioDTO = service.findById(id);
+        CardapioDTO cardapioDTO = service.buscarPorId(id);
         CardapioResponse response = mapper.dtoToResponse(cardapioDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(OK).body(response);
     }
 
     @Override
     public ResponseEntity<Void> delete(Long id) {
-        service.delete(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        service.deletarPorId(id);
+        return ResponseEntity.status(NO_CONTENT).build();
     }
-
-
 }

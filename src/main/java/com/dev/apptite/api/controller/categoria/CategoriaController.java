@@ -3,10 +3,7 @@ package com.dev.apptite.api.controller.categoria;
 import com.dev.apptite.api.controller.categoria.request.CategoriaFilterRequest;
 import com.dev.apptite.api.controller.categoria.request.CategoriaRequest;
 import com.dev.apptite.api.controller.categoria.response.CategoriaResponse;
-import com.dev.apptite.api.controller.restaurante.request.RestauranteFilterRequest;
-import com.dev.apptite.api.controller.restaurante.response.RestauranteResponse;
 import com.dev.apptite.domain.dto.CategoriaDTO;
-import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.mapper.CategoriaMapper;
 import com.dev.apptite.domain.utils.PageResponse;
 import com.dev.apptite.service.CategoriaService;
@@ -17,6 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,21 +29,21 @@ public class CategoriaController implements ICategoriaController {
     public ResponseEntity<CategoriaResponse> create(CategoriaRequest request) {
         CategoriaDTO categoriaDTO = service.salvar(mapper.requestToDto(request));
         CategoriaResponse response = mapper.dtoToResponse(categoriaDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(CREATED).body(response);
     }
 
     @Override
     public ResponseEntity<CategoriaResponse> findById(Long id) {
         CategoriaDTO categoriaDTO = service.findById(id);
         CategoriaResponse response = mapper.dtoToResponse(categoriaDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(OK).body(response);
     }
 
     @Override
     public ResponseEntity<List<CategoriaResponse>> findByIdRestaurante(Long idRestaurante) {
         List<CategoriaDTO> restauranteDTO = service.findByIdRestaurante(idRestaurante);
         List<CategoriaResponse> response = mapper.dtoToResponse(restauranteDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(OK).body(response);
     }
 
     @Override
@@ -56,10 +56,9 @@ public class CategoriaController implements ICategoriaController {
     public ResponseEntity<PageResponse<CategoriaResponse>> findAllPaginated(int pageNumber, int pageSize, String nome) {
 
         CategoriaFilterRequest filter = CategoriaFilterRequest.builder().nome(nome).build();
-
         PageResponse<CategoriaDTO> paginated = service.findPaginated(PageRequest.of(pageNumber, pageSize), filter);
         PageResponse<CategoriaResponse> response = mapper.mapPageDtoToPageResponse(paginated);
 
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(OK).body(response);
     }
 }

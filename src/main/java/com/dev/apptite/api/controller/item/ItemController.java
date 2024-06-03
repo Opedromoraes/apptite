@@ -6,11 +6,12 @@ import com.dev.apptite.domain.dto.ItemDTO;
 import com.dev.apptite.domain.mapper.ItemMapper;
 import com.dev.apptite.service.ItemService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,14 +25,14 @@ public class ItemController implements IItemController {
     public ResponseEntity<ItemResponse> create(ItemRequest request) {
         ItemDTO itemDTO = service.salvar(mapper.requestToDto(request));
         ItemResponse response = mapper.dtoToResponse(itemDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(CREATED).body(response);
     }
 
     @Override
     public ResponseEntity<List<ItemResponse>> findAll() {
         List<ItemDTO> itemDTO = service.findAll();
         List<ItemResponse> response = mapper.dtoToResponse(itemDTO);
-        return  ResponseEntity.status(HttpStatus.OK).body(response);
+        return  ResponseEntity.status(OK).body(response);
 
     }
 
@@ -39,13 +40,13 @@ public class ItemController implements IItemController {
     public ResponseEntity<ItemResponse> findById(Long id) {
         ItemDTO itemDTO = service.findById(id);
         ItemResponse response = mapper.dtoToResponse(itemDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(OK).body(response);
     }
 
     @Override
     public ResponseEntity<Void> delete(Long id) {
         service.delete(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(NO_CONTENT).build();
     }
 
 }

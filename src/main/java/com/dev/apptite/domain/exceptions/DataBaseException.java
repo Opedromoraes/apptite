@@ -5,23 +5,17 @@ import org.springframework.http.HttpStatusCode;
 
 import java.util.List;
 
+public class DataBaseException extends BaseException {
 
-public class NotFoundException extends BaseException {
-
-    public NotFoundException(String message, Object... args) {
-        super(message, HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()), args);
-    }
-
-    public NotFoundException(String message, List<String> errors) {
+    public DataBaseException(String message, List<String> errors) {
         super(message, HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()), errors);
     }
 
-    public NotFoundException(String message) {
+    public DataBaseException(String message) {
         super(message, HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()));
     }
 
-    public NotFoundException(String message, Throwable e) {
+    public DataBaseException(String message, Throwable e) {
         super(message, HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()), e);
     }
-
 }
