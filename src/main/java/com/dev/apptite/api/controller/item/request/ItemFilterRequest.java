@@ -8,19 +8,14 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
-public class ItemRequest {
+public class ItemFilterRequest {
 
-    @Schema(description = "Nome do item", example = "X-egg bacon")
+    @Schema(description = "Nome do item", example = "Coca-cola")
     @NotNull
     private String nome;
-
-    @Schema(description = "Descrição do item", example = "Bife de hambúrguer, queijo, ovo, bacon, alface, tomate e molho especial no pão")
-    private String descricao;
-
-    @Schema(description = "Preço do item", example = "17.50")
-    private double preco;
 
     @Schema(description = "Identificador da categoria", example = "1")
     @NotNull
     private Long idCategoria;
+
 }

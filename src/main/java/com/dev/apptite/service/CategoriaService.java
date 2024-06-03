@@ -1,6 +1,7 @@
 package com.dev.apptite.service;
 
 import com.dev.apptite.api.controller.categoria.request.CategoriaFilterRequest;
+import com.dev.apptite.domain.dto.CardapioDTO;
 import com.dev.apptite.domain.dto.CategoriaDTO;
 import com.dev.apptite.domain.entity.Categoria;
 import com.dev.apptite.domain.exceptions.NotFoundException;
@@ -23,22 +24,26 @@ public class CategoriaService {
     private final CategoriaMapper mapper;
     private final CategoriaRepository repository;
     private final PageResponseMapper pageResponseMapper;
+    private final CardapioService cardapioService;
 
     public CategoriaDTO salvar(CategoriaDTO categoriaDTO) {
+
+        associarCardapio(categoriaDTO);
         Categoria categoria = mapper.dtoToEntity(categoriaDTO);
         return mapper.entityToDTO(repository.salvar(categoria));
     }
 
     public CategoriaDTO update(CategoriaDTO categoriaNovaDTO, Long id) {
 
-        CategoriaDTO categoriaDTO = findById(id);
+        associarCardapio(categoriaNovaDTO);
+        CategoriaDTO categoriaDTO = buscarPorId(id);
         BeanUtils.copyProperties(categoriaNovaDTO, categoriaDTO, "idCategoria");
         Categoria categoria = repository.salvar(mapper.dtoToEntity(categoriaDTO));
 
         return mapper.entityToDTO(categoria);
     }
 
-    public CategoriaDTO findById(Long id) {
+    public CategoriaDTO buscarPorId(Long id) {
         Categoria categoria = repository.findById(id, Categoria.class)
                 .orElseThrow(() -> new NotFoundException("Categoria de id <{}> não encontrada", id));
         return mapper.entityToDTO(categoria);
@@ -67,5 +72,13 @@ public class CategoriaService {
         PageResponse<Categoria> page = pageResponseMapper.pageToPageResponse(categoriaPage);
         return mapper.mapPageEntityToPageDto(page);
 
+    }
+
+    private void associarCardapio(CategoriaDTO categoriaDTO) {
+        if (categoriaDTO.getIdCardapio() != null) {
+            CardapioDTO cardapioDTO = cardapioService.buscarPorId(categoriaDTO.getIdCardapio());
+            categoriaDTO.setCardapio(cardapioDTO);
+            categoriaDTO.setIdCardapio(cardapioDTO.getIdCardapio());
+        }
     }
 }

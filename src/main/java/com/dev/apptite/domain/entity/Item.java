@@ -3,6 +3,7 @@ package com.dev.apptite.domain.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import lombok.experimental.FieldNameConstants;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldNameConstants
 public class Item {
 
     @Id
@@ -21,7 +23,6 @@ public class Item {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @NotBlank(message = "A descrição é obrigatória")
     @Column(name = "descricao", nullable = false)
     private String descricao;
 

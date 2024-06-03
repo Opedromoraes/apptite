@@ -3,6 +3,7 @@ package com.dev.apptite.repository.criteria;
 import com.dev.apptite.domain.enums.CriteriaTypeEnum;
 import com.dev.apptite.domain.exceptions.DataBaseException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -18,6 +19,7 @@ import java.util.Optional;
 
 public abstract class CriteriaRepository<T> {
 
+    @PersistenceContext
     protected EntityManager entityManager;
 
     public Optional<T> findById(Object id, Class<T> entityClass) {
