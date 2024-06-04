@@ -3,10 +3,7 @@ package com.dev.apptite.api.controller.item;
 import com.dev.apptite.api.controller.item.request.ItemFilterRequest;
 import com.dev.apptite.api.controller.item.request.ItemRequest;
 import com.dev.apptite.api.controller.item.response.ItemResponse;
-import com.dev.apptite.api.controller.restaurante.request.RestauranteFilterRequest;
-import com.dev.apptite.api.controller.restaurante.response.RestauranteResponse;
 import com.dev.apptite.domain.dto.ItemDTO;
-import com.dev.apptite.domain.dto.RestauranteDTO;
 import com.dev.apptite.domain.mapper.ItemMapper;
 import com.dev.apptite.domain.utils.PageResponse;
 import com.dev.apptite.service.ItemService;
@@ -14,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -48,9 +43,10 @@ public class ItemController implements IItemController {
     }
 
     @Override
-    public ResponseEntity<PageResponse<ItemResponse>> findAllPaginated(int pageNumber, int pageSize, String nome, String descricao, double preco) {
+    public ResponseEntity<PageResponse<ItemResponse>> findAllPaginated(int pageNumber, int pageSize, String nome, Long idCategoria) {
 
-        ItemFilterRequest filter = ItemFilterRequest.builder().nome(nome).build();
+        ItemFilterRequest filter = ItemFilterRequest.builder().nome(nome).idCategoria(idCategoria).build();
+
 
         PageResponse<ItemDTO> paginated = service.findPaginated(PageRequest.of(pageNumber, pageSize), filter);
         PageResponse<ItemResponse> response = mapper.mapPageDtoToPageResponse(paginated);

@@ -1,4 +1,4 @@
-package com.dev.apptite.repository.impl;
+package com.dev.apptite.repository;
 
 import com.dev.apptite.api.controller.item.request.ItemFilterRequest;
 import com.dev.apptite.domain.entity.Item;
@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.dev.apptite.domain.enums.CriteriaTypeEnum.EQUAL;
 import static com.dev.apptite.domain.enums.CriteriaTypeEnum.LIKE;
 
 @Repository
@@ -58,6 +59,7 @@ public class ItemRepository extends CriteriaRepository<Item> {
         List<Predicate> predicates = new ArrayList<>();
 
         addOptionalCriteria(criteriaBuilder, predicates, root, Item.Fields.nome, request.getNome(), LIKE);
+        addOptionalCriteria(criteriaBuilder, predicates, root, Item.Fields.categoria, request.getIdCategoria(), EQUAL);
 
         return predicates;
     }

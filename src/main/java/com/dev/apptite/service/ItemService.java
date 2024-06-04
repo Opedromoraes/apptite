@@ -1,24 +1,17 @@
 package com.dev.apptite.service;
 
 import com.dev.apptite.api.controller.item.request.ItemFilterRequest;
-import com.dev.apptite.domain.dto.CardapioDTO;
 import com.dev.apptite.domain.dto.CategoriaDTO;
 import com.dev.apptite.domain.dto.ItemDTO;
 import com.dev.apptite.domain.entity.Item;
-import com.dev.apptite.domain.entity.Restaurante;
-import com.dev.apptite.domain.exceptions.BusinessException;
-import com.dev.apptite.domain.exceptions.NotFoundException;
 import com.dev.apptite.domain.mapper.ItemMapper;
 import com.dev.apptite.domain.utils.PageResponse;
 import com.dev.apptite.domain.utils.PageResponseMapper;
-import com.dev.apptite.repository.impl.IItemRepository;
-import com.dev.apptite.repository.impl.ItemRepository;
+import com.dev.apptite.repository.ItemRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor

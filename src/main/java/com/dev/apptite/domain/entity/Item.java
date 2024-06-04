@@ -17,7 +17,7 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idItem;
 
     @NotBlank(message = "O nome é obrigatório")
     @Column(name = "nome", nullable = false)
@@ -26,7 +26,7 @@ public class Item {
     @Column(name = "descricao", nullable = false)
     private String descricao;
 
-    @Column(name = "preco", nullable = false)
+    @Column(name = "preco")
     private double preco;
 
     @ManyToOne
