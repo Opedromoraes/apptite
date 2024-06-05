@@ -53,9 +53,10 @@ public class CategoriaController implements ICategoriaController {
     }
 
     @Override
-    public ResponseEntity<PageResponse<CategoriaResponse>> findAllPaginated(int pageNumber, int pageSize, String nome) {
+    public ResponseEntity<PageResponse<CategoriaResponse>> findAllPaginated(int pageNumber, int pageSize, String nome, Long idCardapio) {
 
-        CategoriaFilterRequest filter = CategoriaFilterRequest.builder().nome(nome).build();
+        CategoriaFilterRequest filter = CategoriaFilterRequest.builder().nome(nome).idCardapio(idCardapio).build();
+
         PageResponse<CategoriaDTO> paginated = service.findPaginated(PageRequest.of(pageNumber, pageSize), filter);
         PageResponse<CategoriaResponse> response = mapper.mapPageDtoToPageResponse(paginated);
 

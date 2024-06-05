@@ -3,6 +3,7 @@ package com.dev.apptite.domain.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import lombok.experimental.FieldNameConstants;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Data
 @Builder(toBuilder = true)
 @AllArgsConstructor
+@FieldNameConstants
 @NoArgsConstructor
 public class Categoria {
 

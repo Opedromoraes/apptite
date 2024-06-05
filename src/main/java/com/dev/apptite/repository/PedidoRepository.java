@@ -1,6 +1,6 @@
 package com.dev.apptite.repository;
 
-import com.dev.apptite.api.controller.pedido.PedidoFilterRequest;
+import com.dev.apptite.api.controller.pedido.request.PedidoFilterRequest;
 import com.dev.apptite.domain.entity.Pedido;
 import com.dev.apptite.domain.exceptions.DataBaseException;
 import com.dev.apptite.domain.exceptions.NotFoundException;

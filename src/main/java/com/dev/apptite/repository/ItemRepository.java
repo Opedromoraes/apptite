@@ -1,11 +1,15 @@
 package com.dev.apptite.repository;
 
 import com.dev.apptite.api.controller.item.request.ItemFilterRequest;
+import com.dev.apptite.domain.entity.Cardapio;
+import com.dev.apptite.domain.entity.Categoria;
 import com.dev.apptite.domain.entity.Item;
+import com.dev.apptite.domain.entity.Restaurante;
 import com.dev.apptite.domain.exceptions.DataBaseException;
 import com.dev.apptite.domain.exceptions.NotFoundException;
 import com.dev.apptite.repository.criteria.CriteriaRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
@@ -59,7 +63,12 @@ public class ItemRepository extends CriteriaRepository<Item> {
         List<Predicate> predicates = new ArrayList<>();
 
         addOptionalCriteria(criteriaBuilder, predicates, root, Item.Fields.nome, request.getNome(), LIKE);
-        addOptionalCriteria(criteriaBuilder, predicates, root, Item.Fields.categoria, request.getIdCategoria(), EQUAL);
+
+        if (request.getIdCategoria() != null) {
+            Join<Item, Categoria> join = root.join(Item.Fields.categoria);
+
+            predicates.add(criteriaBuilder.equal(join.get(Categoria.Fields.idCategoria), request.getIdCategoria()));
+        }
 
         return predicates;
     }

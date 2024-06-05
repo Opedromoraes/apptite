@@ -2,11 +2,13 @@ package com.dev.apptite.repository;
 
 import com.dev.apptite.api.controller.cardapio.request.CardapioFilterRequest;
 import com.dev.apptite.domain.entity.Cardapio;
+import com.dev.apptite.domain.entity.Restaurante;
 import com.dev.apptite.domain.exceptions.DataBaseException;
 import com.dev.apptite.domain.exceptions.NotFoundException;
 import com.dev.apptite.repository.criteria.CriteriaRepository;
 import com.dev.apptite.repository.impl.ICardapioRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
@@ -62,8 +64,18 @@ public class CardapioRepository extends CriteriaRepository<Cardapio> {
         List<Predicate> predicates = new ArrayList<>();
 
         addOptionalCriteria(criteriaBuilder, predicates, root, Cardapio.Fields.nome, request.getNome(), LIKE);
-        addOptionalCriteria(criteriaBuilder, predicates, root, "restaurante.idRestaurante", request.getIdRestaurante(), EQUAL);
-        addOptionalCriteria(criteriaBuilder, predicates, root, "restaurante.nome", request.getNomeRestaurante(), EQUAL);
+
+        if (request.getIdRestaurante() != null || request.getNomeRestaurante() != null) {
+            Join<Cardapio, Restaurante> join = root.join(Cardapio.Fields.restaurante);
+
+            if (request.getIdRestaurante() != null){
+                predicates.add(criteriaBuilder.equal(join.get(Restaurante.Fields.idRestaurante), request.getIdRestaurante()));
+            }
+
+            if (request.getNomeRestaurante()!= null){
+                predicates.add(criteriaBuilder.equal(join.get(Restaurante.Fields.nome), request.getNomeRestaurante()));
+            }
+        }
 
         return predicates;
     }

@@ -133,5 +133,6 @@ public interface ICategoriaController {
     ResponseEntity<PageResponse<CategoriaResponse>> findAllPaginated(
             @ParameterObject @RequestParam(defaultValue = "0") @Min(0) int page,
             @ParameterObject @RequestParam(defaultValue = "10") @Min(1) int size,
-            @RequestParam(required = false) String nome);
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) Long idCardapio);
 }
