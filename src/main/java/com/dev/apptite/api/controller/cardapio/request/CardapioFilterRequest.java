@@ -17,4 +17,8 @@ public class CardapioFilterRequest {
     @Schema(description = "ID do restaurante", example = "1")
     @NotNull
     private Long idRestaurante;
+
+    @Schema(description = "Nome do restaurante", example = "Churras")
+    @NotNull
+    private String nomeRestaurante;
 }

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.dev.apptite.domain.enums.CriteriaTypeEnum.EQUAL;
 import static com.dev.apptite.domain.enums.CriteriaTypeEnum.LIKE;
 
 @Repository
@@ -61,6 +62,8 @@ public class CardapioRepository extends CriteriaRepository<Cardapio> {
         List<Predicate> predicates = new ArrayList<>();
 
         addOptionalCriteria(criteriaBuilder, predicates, root, Cardapio.Fields.nome, request.getNome(), LIKE);
+        addOptionalCriteria(criteriaBuilder, predicates, root, "restaurante.idRestaurante", request.getIdRestaurante(), EQUAL);
+        addOptionalCriteria(criteriaBuilder, predicates, root, "restaurante.nome", request.getNomeRestaurante(), EQUAL);
 
         return predicates;
     }

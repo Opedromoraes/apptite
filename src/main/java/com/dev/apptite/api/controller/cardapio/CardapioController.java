@@ -42,14 +42,17 @@ public class CardapioController implements ICardapioController {
     }
 
     @Override
-    public ResponseEntity<PageResponse<CardapioResponse>> findAllPaginated(int pageNumber, int pageSize, String nome, Long idRestaurante) {
+    public ResponseEntity<PageResponse<CardapioResponse>> findAllPaginated(int pageNumber, int pageSize, String nome, Long idRestaurante, String nomeRestaurante) {
 
-        CardapioFilterRequest filter = CardapioFilterRequest.builder().nome(nome).build();
+        CardapioFilterRequest request = CardapioFilterRequest.builder()
+                .nome(nome)
+                .idRestaurante(idRestaurante)
+                .nomeRestaurante(nomeRestaurante)
+                .build();
 
-
-        PageResponse<CardapioDTO> paginated = service.findPaginated(PageRequest.of(pageNumber, pageSize), filter);
+        PageResponse<CardapioDTO> paginated = service.findPaginated(PageRequest.of(pageNumber, pageSize), request);
         PageResponse<CardapioResponse> response = mapper.mapPageDtoToPageResponse(paginated);
 
         return ResponseEntity.status(OK).body(response);
-  }
+    }
 }
