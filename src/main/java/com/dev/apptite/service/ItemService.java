@@ -24,12 +24,12 @@ public class ItemService {
 
     public ItemDTO salvar(ItemDTO itemDTO) {
 
-        associarCategoria(itemDTO);
+        associarItem(itemDTO);
         Item item = mapper.dtoToEntity(itemDTO);
         return mapper.entityToDTO(repository.salvar(item));
     }
 
-    public ItemDTO findById(Long id) {
+    public ItemDTO buscarPorId(Long id) {
         Item item = repository.buscarPorId(id);
         return mapper.entityToDTO(item);
     }
@@ -46,7 +46,7 @@ public class ItemService {
         return mapper.mapPageEntityToPageDto(page);
     }
 
-    private void associarCategoria(ItemDTO itemDTO) {
+    private void associarItem(ItemDTO itemDTO) {
         if (itemDTO.getIdCategoria() != null) {
             CategoriaDTO categoriaDTO = categoriaService.buscarPorId(itemDTO.getIdCategoria());
             itemDTO.setCategoria(categoriaDTO);

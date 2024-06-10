@@ -31,7 +31,7 @@ public class ItemController implements IItemController {
 
     @Override
     public ResponseEntity<ItemResponse> findById(Long id) {
-        ItemDTO itemDTO = service.findById(id);
+        ItemDTO itemDTO = service.buscarPorId(id);
         ItemResponse response = mapper.dtoToResponse(itemDTO);
         return ResponseEntity.status(OK).body(response);
     }

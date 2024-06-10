@@ -68,7 +68,7 @@ public class CategoriaService {
 
 
     public PageResponse<CategoriaDTO> findPaginated(PageRequest pageable, CategoriaFilterRequest request) {
-        Page<Categoria> categoriaPage = repository.findPaginated(pageable, request, Categoria.class);
+        Page<Categoria> categoriaPage = repository.buscarPorFiltroComPaginacao(pageable, request);
         PageResponse<Categoria> page = pageResponseMapper.pageToPageResponse(categoriaPage);
         return mapper.mapPageEntityToPageDto(page);
 
