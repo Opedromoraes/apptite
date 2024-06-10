@@ -5,10 +5,16 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum CriteriaTypeEnum {
 
-    EQUAL,
-    IN,
     LIKE,
-    GREATER_THAN,
-    LESS_THAN
+    EQUAL,
+    BTW,
+    GT,
+    LT,
+    GTE,
+    LTE,
+    IN;
+    public static CriteriaTypeEnum fromString(String type) {
+        return CriteriaTypeEnum.valueOf(type.toUpperCase());
+    }
 
 }

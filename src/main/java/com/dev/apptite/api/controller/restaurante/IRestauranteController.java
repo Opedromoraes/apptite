@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
@@ -137,5 +139,26 @@ public interface IRestauranteController {
             @ParameterObject @RequestParam(defaultValue = "10") @Min(1) int size,
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) String endereco);
+
+    @Operation(
+            summary = "Consultar restaurante",
+            description = "Endpoint responsável por buscar um ou mais restaurantes",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Restaurante encontrado com sucesso.",
+                            content = @Content(schema = @Schema(implementation = RestauranteResponse.class))),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Restaurante não encontrado.",
+                            content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Ocorreu um erro inesperado.",
+                            content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
+            })
+    @GetMapping("/queryString")
+    @ResponseStatus(OK)
+    ResponseEntity<List<RestauranteResponse>> findByQueryString(@RequestParam String queryString);
 
 }

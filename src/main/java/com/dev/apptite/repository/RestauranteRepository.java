@@ -4,15 +4,14 @@ import com.dev.apptite.api.controller.restaurante.request.RestauranteFilterReque
 import com.dev.apptite.domain.entity.Restaurante;
 import com.dev.apptite.domain.exceptions.NotFoundException;
 import com.dev.apptite.repository.criteria.CriteriaRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +51,10 @@ public class RestauranteRepository extends CriteriaRepository<Restaurante> {
         } catch (NotFoundException e) {
             throw new NotFoundException("Restaurante não encontrado: " + id);
         }
+    }
+
+    public List<Restaurante> findByQueryString(String queryString){
+        return findByQueryString(queryString, Restaurante.class);
     }
 
     @Override
