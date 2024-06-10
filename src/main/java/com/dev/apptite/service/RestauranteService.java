@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class RestauranteService {
@@ -44,5 +46,10 @@ public class RestauranteService {
         Page<Restaurante> restaurantePage = repository.buscarPorFiltroComPaginacao(pageable, request);
         PageResponse<Restaurante> page = pageResponseMapper.pageToPageResponse(restaurantePage);
         return mapper.mapPageEntityToPageDto(page);
+    }
+
+    public List<RestauranteDTO> findByQueryString(String queryString){
+        List<Restaurante> restaurantes = repository.findByQueryString(queryString);
+        return mapper.entityToDTO(restaurantes);
     }
 }

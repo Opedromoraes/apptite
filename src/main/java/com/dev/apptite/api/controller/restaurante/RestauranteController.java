@@ -14,6 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
@@ -57,6 +59,15 @@ public class RestauranteController implements IRestauranteController {
 
         PageResponse<RestauranteDTO> paginated = service.findPaginated(PageRequest.of(pageNumber, pageSize), filter);
         PageResponse<RestauranteResponse> response = mapper.mapPageDtoToPageResponse(paginated);
+
+        return ResponseEntity.status(OK).body(response);
+    }
+
+    @Override
+    public ResponseEntity<List<RestauranteResponse>> findByQueryString(String queryString) {
+
+        List<RestauranteDTO> responseDTO = service.findByQueryString(queryString);
+        List<RestauranteResponse> response = mapper.dtoToResponse(responseDTO);
 
         return ResponseEntity.status(OK).body(response);
     }
