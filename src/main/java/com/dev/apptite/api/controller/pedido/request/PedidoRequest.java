@@ -1,8 +1,11 @@
 package com.dev.apptite.api.controller.pedido.request;
 
+import com.dev.apptite.domain.entity.Item;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -10,11 +13,11 @@ import lombok.*;
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
 public class PedidoRequest {
 
-    @Schema(description = "Nome do cardapio", example = "Cardapio")
+    @Schema(description = "Status do pedido", example = "Pronto")
     @NotNull
-    private String nome;
+    private String status;
 
     @Schema(description = "ID do restaurante", example = "1")
     @NotNull
-    private Long idRestaurante;
+    private List<Item> item;
 }

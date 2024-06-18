@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PedidoResponse {
 
-    Long idCardapio;
-    String nome;
+    Long idPedido;
+    String status;
     RestauranteResponse restaurante;
 
 }
