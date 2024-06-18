@@ -13,4 +13,5 @@ public class PedidoDTO {
 
     private Long idPedido;
     private String status;
+
 }

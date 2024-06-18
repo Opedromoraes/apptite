@@ -9,10 +9,7 @@ import lombok.*;
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
 public class PedidoFilterRequest {
 
-    @Schema(description = "Nome do restaurante", example = "Churras")
-    private String nome;
-
-    @Schema(description = "Endereço", example = "Avenida Miguel Perrela, 69")
-    private String endereco;
+    @Schema(description = "Status do pedido", example = "Pronto")
+    private String status;
 
 }

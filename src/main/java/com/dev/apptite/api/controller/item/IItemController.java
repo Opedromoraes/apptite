@@ -3,7 +3,6 @@ package com.dev.apptite.api.controller.item;
 import com.dev.apptite.api.controller.categoria.response.CategoriaResponse;
 import com.dev.apptite.api.controller.item.request.ItemRequest;
 import com.dev.apptite.api.controller.item.response.ItemResponse;
-import com.dev.apptite.api.controller.restaurante.response.RestauranteResponse;
 import com.dev.apptite.domain.exceptions.dto.ErrorDTO;
 import com.dev.apptite.domain.utils.PageResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,8 +16,6 @@ import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -116,24 +113,24 @@ public interface IItemController {
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) Long idCategoria);
 
-    @Operation(
-            summary = "Consultar item",
-            description = "Endpoint responsável por buscar um ou mais restaurantes",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Restaurante encontrado com sucesso.",
-                            content = @Content(schema = @Schema(implementation = RestauranteResponse.class))),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Restaurante não encontrado.",
-                            content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Ocorreu um erro inesperado.",
-                            content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
-            })
-    @GetMapping("/queryString")
-    @ResponseStatus(OK)
-    ResponseEntity<List<RestauranteResponse>> findByQueryString(@RequestParam String queryString);
+//    @Operation(
+//            summary = "Consultar item",
+//            description = "Endpoint responsável por buscar um ou mais restaurantes",
+//            responses = {
+//                    @ApiResponse(
+//                            responseCode = "200",
+//                            description = "Restaurante encontrado com sucesso.",
+//                            content = @Content(schema = @Schema(implementation = RestauranteResponse.class))),
+//                    @ApiResponse(
+//                            responseCode = "404",
+//                            description = "Restaurante não encontrado.",
+//                            content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
+//                    @ApiResponse(
+//                            responseCode = "500",
+//                            description = "Ocorreu um erro inesperado.",
+//                            content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
+//            })
+//    @GetMapping("/queryString")
+//    @ResponseStatus(OK)
+//    ResponseEntity<List<RestauranteResponse>> findByQueryString(@RequestParam String queryString);
 }

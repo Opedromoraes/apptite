@@ -30,8 +30,7 @@ public class PedidoRepository extends CriteriaRepository<Pedido> {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Pedido> buscarPorIdOptional(@NonNull final Long id) {
-        return findById(id, Pedido.class);
+    public Optional<Pedido> buscarPorIdOptional(@NonNull final Long id) {return findById(id, Pedido.class);
     }
 
     @Transactional(readOnly = true)
@@ -55,7 +54,11 @@ public class PedidoRepository extends CriteriaRepository<Pedido> {
                                                      @NonNull final Object filterRequest) {
         PedidoFilterRequest request = (PedidoFilterRequest) filterRequest;
         List<Predicate> predicates = new ArrayList<>();
-        addOptionalCriteria(criteriaBuilder, predicates, root, Pedido.Fields.status, request.getNome(), EQUAL);
+        addOptionalCriteria(criteriaBuilder, predicates, root, Pedido.Fields.status, request.getStatus(), EQUAL);
         return predicates;
+    }
+
+    public void deletarPorId(Long id) {
+        deleteById(id, Pedido.class);
     }
 }

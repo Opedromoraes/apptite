@@ -15,6 +15,8 @@ public class ItemDTO {
     private String nome;
     private Long idCategoria;
     private CategoriaDTO categoria;
+    private Long idPedido;
+    private PedidoDTO pedido;
     private String descricao;
     private double preco;
 
