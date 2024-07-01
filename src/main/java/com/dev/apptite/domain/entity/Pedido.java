@@ -1,7 +1,7 @@
 package com.dev.apptite.domain.entity;
 
+import com.dev.apptite.domain.enums.StatusPedidoEnum;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,11 +22,11 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPedido;
 
-    @NotBlank(message = "O campo 'status' é obrigatório")
     @Column(nullable = false)
-    private String status;
+    @Enumerated(value = EnumType.STRING)
+    private StatusPedidoEnum status;
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Item> item;
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY,orphanRemoval = true)
+    private List<Item> itens;
 
 }

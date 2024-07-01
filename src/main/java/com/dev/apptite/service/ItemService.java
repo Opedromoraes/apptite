@@ -24,7 +24,7 @@ public class ItemService {
 
     public ItemDTO salvar(ItemDTO itemDTO) {
 
-        associarItem(itemDTO);
+        associarCategoria(itemDTO);
         Item item = mapper.dtoToEntity(itemDTO);
         return mapper.entityToDTO(repository.salvar(item));
     }
@@ -46,7 +46,7 @@ public class ItemService {
         return mapper.mapPageEntityToPageDto(page);
     }
 
-    private void associarItem(ItemDTO itemDTO) {
+    private void associarCategoria(ItemDTO itemDTO) {
         if (itemDTO.getIdCategoria() != null) {
             CategoriaDTO categoriaDTO = categoriaService.buscarPorId(itemDTO.getIdCategoria());
             itemDTO.setCategoria(categoriaDTO);

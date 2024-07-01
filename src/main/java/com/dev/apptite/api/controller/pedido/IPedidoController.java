@@ -2,6 +2,7 @@ package com.dev.apptite.api.controller.pedido;
 
 import com.dev.apptite.api.controller.pedido.request.PedidoRequest;
 import com.dev.apptite.api.controller.pedido.response.PedidoResponse;
+import com.dev.apptite.domain.enums.StatusPedidoEnum;
 import com.dev.apptite.domain.exceptions.dto.ErrorDTO;
 import com.dev.apptite.domain.utils.PageResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,6 +45,32 @@ public interface IPedidoController {
         @PostMapping
         @ResponseStatus(CREATED)
         ResponseEntity<PedidoResponse> create(@Valid @RequestBody PedidoRequest pedidoRequest);
+
+        @Operation(
+                summary = "Status do Pedido",
+                description = "Endpoint responsável por atualizar o status do pedido",
+                responses = {
+                        @ApiResponse(
+                                responseCode = "201",
+                                description = "Status atualizado com sucesso.",
+                                content = @Content(schema = @Schema(implementation = PedidoResponse.class))),
+                        @ApiResponse(
+                                responseCode = "422",
+                                description = "Requisição possui pelo menos um valor faltante ou inválido.",
+                                content = @Content(schema = @Schema(implementation = ErrorDTO.class))),
+                        @ApiResponse(
+                                responseCode = "500",
+                                description = "Ocorreu um erro inesperado.",
+                                content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
+                })
+        @PutMapping("{status}/{id}")
+        @ResponseStatus(OK)
+        ResponseEntity<Void> update(@PathVariable("status") StatusPedidoEnum status,@PathVariable("id") Long id);
+
+        // criar 1 endpoint (update) que vai receber o status do pedido por pathparam e o id do pedido por pathparam
+        // no pedidoservice criar endpoint para processar o status do pedido
+        // utilizando switchcase no status, chamar um método particular para cada status
+        // em cada método chamar a API do whatsapp (validar como funciona a API do wpp e descobrir como fazer uma chamada http externa)
 
         @Operation(
                 summary = "Buscar pedido por id",

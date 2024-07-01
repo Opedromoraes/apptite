@@ -16,5 +16,13 @@ public class ItemRequest {
 
     @Schema(description = "Identificador da categoria", example = "1")
     @NotNull
-    private Long idCardapio;
+    private Long idCategoria;
+
+    @Schema(description = "Preço do item", example = "25.90")
+    @NotNull
+    private double preco;
+
+    @Schema(description = "Descrição do item", example = "Pão com carne,queijo, salada e molho especial")
+    @NotNull
+    private String descricao;
 }

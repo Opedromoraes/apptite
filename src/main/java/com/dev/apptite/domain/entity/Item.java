@@ -1,5 +1,6 @@
 package com.dev.apptite.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -23,7 +24,7 @@ public class Item {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Column(name = "descricao", nullable = false)
+    @Column(name = "descricao")
     private String descricao;
 
     @Column(name = "preco")
@@ -37,6 +38,7 @@ public class Item {
     private List<Variacao> variacoes;
 
     @ManyToOne
-    @JoinColumn(name = "pedido_id", nullable = false)
+    @JsonIgnore
+    @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 }
